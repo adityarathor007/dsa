@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(){
-
+    
     unordered_map<string,int> menu;
 
     // Inserting key value pairs inside hashtable O(1) hashtable
