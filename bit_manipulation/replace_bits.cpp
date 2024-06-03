@@ -14,14 +14,20 @@ using namespace std;
 
 
 void clearBitsInRange(int &n,int i,int j){
-    int mask=(-1<<(j-i));
-    n=n&mask;
+    int mask1=(-1<<(j+1));
+    int mask2=~(-1<<(i));
+    cout<<"the mask2: "<<mask2<<endl;
+    int mask_range=mask1|mask2;
+    cout<<mask_range<<endl;
+    n=n&mask_range;
     
 }
 
 int replaceBits(int n,int m,int i, int j){
     clearBitsInRange(n,i,j);
-    int ans=n&m;
+    cout<<n<<endl;
+    int mask_m=(m<<i);
+    int ans=n|mask_m;
     return ans;
     
 }
