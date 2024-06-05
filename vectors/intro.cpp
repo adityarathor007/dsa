@@ -33,7 +33,7 @@ int main(){
     
     arr[0][0]+=10;
 
-    // for accessing each element
+    // for accessing each element  //.size() gives the size of vector
     for(int i=0;i<arr.size();i++){
         for (int number: arr[i]){  //2nd option of for using for loop
             cout << number << "," ;
