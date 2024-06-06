@@ -1,29 +1,29 @@
 #include <bits/stdc++.h>
+#include <unordered_map>
 using namespace std;
 
-int cntSubarrays(vector<int> arr, int k)
+int cntSubarraysWTargetSum(vector<int> arr, int k)
 {
     // complete this method
-    int i = 0;
-    int j = 0;
-    int cs = 0;
-    int count = 0;
-
-    while (j < arr.size())
-    {
-        int num = arr[j];
-        cs += num;
-        
-        if (cs == k)
-        {
-            count += 1;
-            while(i<=j){
-                i++;
-                cs-=arr[i];
-            }
+    int count=0;
+    int cs=0;
+    int comp;
+    unordered_map<int, int> table;
+    for(int i=0;i<arr.size();i++){
+        cs+=arr[i];
+        if(cs==k){
+            count++;
         }
-        j += 1;
+        comp=cs-k;
+        if(table.count(comp)){   //to check if key in the map or not 
+            count+=table[comp];
+        }
+
+        table[cs]++;
+
     }
+  
+
     
     return count;
 }
@@ -31,7 +31,7 @@ int cntSubarrays(vector<int> arr, int k)
 int main() {
     vector<int> input = {10, 2, -2, -20, 10};
     int k=-10;
-    cout<<cntSubarrays(input,k)<<endl;
+    cout<<cntSubarraysWTargetSum(input,k)<<endl;
     return 0;
 
 }

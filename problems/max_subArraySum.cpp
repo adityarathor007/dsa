@@ -9,7 +9,7 @@ int maxSubarraySum(vector<int> arr)
     int max=0;
     int c_sum=0;
     for(int i=0;i<n;){
-        if(arr[i]>0){
+        if(arr[i]>0){   //starting window cant be negative as it is better to start with the next positive term
             while(c_sum>=0 and i<n){
                 c_sum+=arr[i];
                 cout<<"the current sum is "<<c_sum<<endl;
@@ -20,7 +20,7 @@ int maxSubarraySum(vector<int> arr)
             }
            if(c_sum<0){
             // i++;
-            c_sum=0;
+            c_sum=0;  //start a new window
             continue;
            } 
         }
