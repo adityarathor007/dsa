@@ -9,20 +9,35 @@ void merge(vector <int>&array,int s,int e){
     int m=(s+e)/2;
     int j=m+1;
     vector<int> temp;
-    while(i<=m or j<=e){
-    if(array[i]>array[j]){
+    while(i<=m and j<=e){
+    if(array[i]>=array[j]){
         temp.push_back(array[j]);
-        i++;
+        j++;
     }
     else{
         temp.push_back(array[i]);
+        i++;
+    }
+    }   
+
+    while(i<=m){
+        temp.push_back(array[i]);
+        i++;
+    }
+
+    while (j <= e)
+    {
+        temp.push_back(array[j]);
         j++;
     }
+
+    // array=temp;        
+    int k=0;
+    for(int i=s;i<=e;i++){
+        array[i]=temp[k++];
+
     }
-
-
-    array=temp;
-    return ;
+    
 
 }
 
@@ -37,6 +52,7 @@ void mergeSort(vector<int> &array, int s,int e){
         return ;
     }
 
+    //recursive case
     int mid=(s+e)/2;
     mergeSort(array,s,mid);
     mergeSort(array,mid+1,e);
