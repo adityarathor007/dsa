@@ -7,15 +7,16 @@ using namespace std;
 
 int findElementInRotatedArray( vector <int> arr,int k){
     int s=0;
-    int e=0;
+    int e=arr.size()-1;
     while(s<=e){
+        
         int mid=(s+e)/2;
         if(arr[mid]==k){
             return mid;
         }
         else{
             if(arr[s]<=arr[mid]){  //on L1
-                if(arr[s]<=k<arr[mid]){
+                if(arr[s]<=k and k<arr[mid]){
                     e=mid-1;  //move left 
                 }
                 else{
@@ -23,7 +24,8 @@ int findElementInRotatedArray( vector <int> arr,int k){
                 }
             }
             else if(arr[mid]<=arr[e]){ //on L2
-                if(arr[mid]<k<=arr[e]){
+            
+                if(arr[mid]<k and k<=arr[e]){
                     s=mid+1; //move right
                 }
                 else{
