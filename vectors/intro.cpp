@@ -4,7 +4,12 @@ using namespace std;
 
 int main(){
     //Demo Vector
-    // vector<int> arr={1,2,10,43}
+    vector<int> arr={0,0,1,2,4,2,1,3};
+    int n=arr.size();
+    cout<<n<<endl;
+    
+    
+    
 
     // Fill Constructor
     // vector<int> arr(10,7);
@@ -23,23 +28,23 @@ int main(){
 
 
     // 2d vector
-    vector<vector <int> > arr={
-        {1,2,3},
-        {4,5,6},
-        {7,8,9,10},
-        {11,12},
-    };
+//     vector<vector <int> > arr={
+//         {1,2,3},
+//         {4,5,6},
+//         {7,8,9,10},
+//         {11,12},
+//     };
 
     
-    arr[0][0]+=10;
+//     arr[0][0]+=10;
 
-    // for accessing each element  //.size() gives the size of vector
-    for(int i=0;i<arr.size();i++){
-        for (int number: arr[i]){  //2nd option of for using for loop
-            cout << number << "," ;
-        }
-        cout<<endl;
-    }
+//     // for accessing each element  //.size() gives the size of vector
+//     for(int i=0;i<arr.size();i++){
+//         for (int number: arr[i]){  //2nd option of for using for loop
+//             cout << number << "," ;
+//         }
+//         cout<<endl;
+//     }
 
 
 

@@ -7,7 +7,7 @@ using namespace std;
 int countMinSwaps(vector <int> arr){
     int ans=0;
     int n=arr.size();
-    pair<int,int> ap[n];  // to maintain the indicies of the initial array
+    pair<int,int> ap[n];  // array to maintain the indicies of the initial array
 
     for(int i=0;i<n;i++){
         ap[i].first=arr[i];
@@ -56,4 +56,4 @@ int main(){
     cout<<countMinSwaps(arr)<<endl;
     return 0;
 
-}
+} 
