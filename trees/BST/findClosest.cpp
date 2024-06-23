@@ -1,6 +1,4 @@
 #include <climits>
-#include <cmath>
-#include <cstdint>
 #include<iostream>
 using namespace std;
 
