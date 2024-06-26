@@ -10,6 +10,12 @@
         "bitset": "cpp",
         "array": "cpp",
         "deque": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "iostream": "cpp",
+        "chrono": "cpp",
+        "algorithm": "cpp",
+        "format": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp"
     }
 }
