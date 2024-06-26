@@ -53,7 +53,7 @@ void printNearestCabs(vector<Cab> cabs,int k){
         max_heap.pop();
     }
     
-    // sort(ans.begin(),ans.end(),compCabBasedOnDist);
+    sort(ans.begin(),ans.end(),compCabBasedOnDist);
     
     for(auto cab:ans){
         cout<<cab.name<<endl;
