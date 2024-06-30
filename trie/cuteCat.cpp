@@ -47,47 +47,49 @@ class Trie{
 };
 
 
-vector <bool> checkOcc(vector <string> q,string text){
+void checkOcc (vector <string> q,string text){
     unordered_map<string,bool> table;
-    vector<bool> ans;
     Trie t;
     
 
-    for(auto str:q){  //inserting all queries in trie and map
+    for(auto str:q){  //inserting all queries in trie
         t.insert(str);
-        table[str]=false;
+       
     }
 
+  
     Node *curr = t.root;
     for(int i=0;i<text.length();i++){
+        curr=t.root; //this resetting is imp as because for a particular starting letter we were not able to find the matching word so starting with next text[i]
         for(int j=i;j<text.length();j++){
-            // if(t.search(text.substr(i,j-i+1))){ //this method is inefficient as once for a starting letter not found in the trie then we are still traversing all suffix with that letter
+            // if(t.search(text.substr(i,j-i+1))){ //!---this method is inefficient as once for a starting letter not found in the trie then we are still traversing all suffix with that letter---!
             //     table[text.substr(i, j - i + 1)]=true;  
             // }
             char ch=text[j];
             if(curr->m.count(ch)==0){
-                cout<<"not in trie "<<text.substr(i,j-i+1)<<endl;
+                
                 break;
             }
-            cout<<ch<<endl;
+         
             curr = curr->m[ch];
 
             if(curr->isTerminal){
-                cout << "in trie" << text.substr(i, j - i + 1) << endl;
+
                 table[text.substr(i,j-i+1)]=true;
             }
             
         }
     }
 
-    
-    for(auto str:q){
-        ans.push_back(table[str]);
+    for (auto str : q){
+        cout<<str<<" -> ";
+        if(table[str]){
+            cout<<"true"<<endl;
+        }
+        else{
+            cout<<"false"<<endl;
+        }
     }
-
-
-    return ans;
-
 }
 
 
@@ -105,15 +107,8 @@ int main(){
     
     string text="a little cute cat is roaming around";
     vector <string> q={"ttle","cute cat","roam","ze"};
-    auto ans=checkOcc(q,text);
-    for(auto x:ans){
-        if(x){
-            cout<<"yes"<<",";
-        }
-        else{
-            cout<<"no"<<",";
-        }
-    }
-    cout<<endl;
+    checkOcc(q,text);
+    
+
     return 0;
 }
