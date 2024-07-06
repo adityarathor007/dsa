@@ -12,7 +12,7 @@ class Graph{
 
     Graph(int v){
         V=v;
-        l=new list<int>[V];
+        l=new list<int>[V]; //dynamically allocate an array of V elements, where each element is a list<int>.
     }
 
     void addEdge(int i,int j,bool undir=true){
@@ -36,7 +36,7 @@ class Graph{
 
 
     void dfs(int source){
-        bool *visited=new bool[V]{0};
+        bool *visited=new bool[V]{false};
         dfsHelper(source,visited);
         cout<<endl;
 
