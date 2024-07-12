@@ -20,5 +20,6 @@
         "queue": "cpp",
         "__split_buffer": "cpp",
         "list": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
