@@ -9,6 +9,11 @@ using namespace std;
 //     if(n==0){
 //         return 0;
 //     }
+// int findMinChange(int n,vector<int>& coins,vector<int> &dp){
+//     cout<<"the value of n is: "<<n<<endl;
+//     if(n==0){
+//         return 0;
+//     }
     
 //     int ans=INT_MAX;
 //     for(auto x:coins){
@@ -52,6 +57,19 @@ int main(){
     //     cout<<x<<",";
     // }
     // cout<<endl;
+
+    return dp[n];
+}
+
+
+
+int main(){
+    int n=15;
+    vector<int> coins{1,3,7,10};
+
+    cout<<findMinChange(n,coins)<<endl;
+   
+    
 
 
 }
