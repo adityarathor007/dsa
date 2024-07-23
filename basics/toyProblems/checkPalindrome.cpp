@@ -2,6 +2,9 @@
 #include<math.h>
 using namespace std;
 
+// reverse will be equal to original
+
+
 int main(){
     int n;
     cin>>n;
@@ -15,10 +18,12 @@ int main(){
     }
     
     
- 
-  
-
-    cout<<ans<<endl;
+    if(ans==num){
+        cout<<"Yes it is a palindrome"<<endl;
+    }
+    else{
+        cout<<"Not a palindrome"<<endl;
+    }
 
 
 }
