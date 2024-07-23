@@ -1,5 +1,5 @@
 #include<iostream>
-#include<vectors>
+#include<vector>
 using namespace std;
 
 // void explainVector(){
@@ -134,6 +134,187 @@ using namespace std;
 
 
 // }
+
+// void explainPQ(){
+//     priority_queue<int> pq;
+//     pq.push(5);
+//     pq.push(2);
+//     pq.push(3);
+    
+//     cout<<pq.top();
+
+//     pq.pop();
+
+//     priority_queue<int,vector<int>,greater<int>> pq;  //minheap
+//     pq.push(5);
+//     pq.push(2);//{2,5}
+//     pq.push(18);//{2,5,18}
+//     pq.emplace(1);//{1,2,5,18}
+
+//     cout<<pq.top()<<endl;
+
+
+// }
+
+
+
+// void explainSet(){   //stores unique things and sorted 
+//     set <int> st;
+//     st.insert(1);
+//     st.emplace(2);
+//     st.insert(2);
+//     st.insert(4);
+
+//     auto it=st.find(1);
+
+//     auto it=st.find(5);  //it will point to s.end()
+
+//     st.erase(1);
+
+//     int cnt=st.count(1); //return 1 if there in the set else 0
+
+//     auto it1=st.find(2);
+//     auto it2=st.find(4);
+//     st.erase(it1,it2);  //[first,last)
+
+//     //{1,2,4}
+//     auto it=st.lower_bound(2); //will return iterator pointing to 2 
+//     auto it=st.lower_bound(3); //will return itertor pointing to the next greater element which is 4
+//     auto it=st.upper_bound(5); //will return iterator pointing to st.end() 
+//     //the only difference between lower bound and upper bound is that in upper bound even if the element is present it will point to the next greater element
+
+//     int ind=st.lower_bound(2)-st.begin(); //to get the index    
+
+
+// }
+
+
+// void explainMultiSet(){
+//     multiset<int> ms;
+//     ms.insert(1);
+//     ms.insert(1);
+//     ms.insert(1);   //{1,1,1}
+
+//     ms.erase(1);
+
+//     int cnt=ms.count(1);//will count the number of elements in the multiset
+
+//     //only a single 1 is erased
+//     ms.erase(ms.find(1));
+
+//     ms.erase(ms.find(1),ms.find(1)+2) //move till 3rd but dont erase the 3rd element
+
+//     ///rest function same as set
+// }
+
+// void explainUSet(){
+//     unordered_set<int> st;  //unique but not sorted it's stores randomly(does everything in O(1) time)
+//     //lower_bound and upper_bound function does not works, rest same as set
+// }
+
+// void explainMap(){  //the keys are unique and sorted but values may repeat for different keys
+//     map <int,int> mpp;
+
+//       mpp[1]=2;
+//       mpp.inserT({2,4});
+//     mpp.emplace({3,1});
+
+
+
+
+//     map<int,pair<int,int>> mpp;
+//     map<pair<int,int>,int> mpp;
+//     mpp[{2,3}]=10;
+
+
+//     for(auto it:mpp){
+//         cout<<it.first<<" "<<it.second<<endl;
+
+//     }
+
+//     cout<<mpp[1];
+//     cout<<mpp[5]; //it will show 0 as nothing stored for this key 
+
+
+//     auto it=mpp.find(3);
+//     cout<<*(it).second;
+
+//     auto it=mpp.find(5);
+
+//     auto it=mpp.lower_bound(2);
+//     auto it=mpp.upper_bound(4);
+
+// }
+
+
+// void explainMutliMap(){
+//     //everything same as map, only it can store multiple keys
+//     //only mpp[key] cannot be used here
+// }
+
+// void explainUnorderedMap(){ ///does everything in O(1)
+//     //same as set and unordered_Set diff
+// }
+
+
+
+// bool comp(pair<int,int> p1,pair<int,int> p2){  //we assume that pair p1 lies before p2
+//     if(p1.second<p2.second){
+//         return true;
+//     }
+//     if(p1.second>p2.second){
+//         return false;
+//     }
+//     if(p1.first>p2.first){
+//         return true;
+//     }
+//     return false;
+// }   
+
+
+// void explainSort(){
+//     int a[]={1,5,3,2};
+//     sort(a,a+4); //[start,end)  
+
+//     // for vector
+//     sort(v.begin(),v.end());
+
+//     sort(a+2,a+4);// to sort the from 3 to 2
+
+
+//     // to sort in descending order
+//     sort(a,a+n,greater<int>); //to sort in descending order
+
+//     pair<int,int> a[]={{1,2},{2,1},{4,1}};
+//     //custom sort
+//     sort(a,a+n,comp); //sort acc to 2nd element and if second elmeent same then sort acc to first element but in descending order
+
+
+//     //finding the number of set bits
+//     int num=7;
+//     int cnt=__builtin_popcount(num);
+    
+//     long long num=165786578687;
+//     int cnt=__builtin_popcountll(num); // for long long
+
+//     string s="134";
+//     sort(s.begin(),s.end());
+//     //imp to be sorted before getting all permutation as it gives in lexigraphic inc order
+
+//     do{
+//         cout<<s<<endl;
+//     }while(next_permutation(s.begin(),s.end()));
+
+//     int maxi=*max_element(a,a+n);
+
+
+
+
+
+
+// }
+
+
 
 
 

@@ -4,11 +4,7 @@
     {
       "label": "Run C++",
       "type": "shell",
-      "command": "g++ ${file} -o ${fileDirname}/a && ${fileDirname}/a < ${fileDirname}/input.txt  > ${fileDirname}/output.txt",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
+      "command": "g++ ${file} -o ${fileDirname}/a && ${fileDirname}/a < ${fileDirname}/input.txt  > ${fileDirname}/output.txt", //for linux
       "problemMatcher": ["$gcc"],
       "presentation": {
         "echo": false,
