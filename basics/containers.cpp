@@ -49,7 +49,7 @@ using namespace std;
 
 
 //     vector<int> v2(2,50);
-//     v.insert(v.begin(),v2.begin(),v.end()); //{50,50,300,10,10,100,100}
+//     v.insert(v.begin(),v2.begin(),v2.end()); //{50,50,300,10,10,100,100}
 
 //     cout<<v.size()<<endl;
 

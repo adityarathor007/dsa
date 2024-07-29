@@ -1,1 +1,1 @@
-Not a palindrome
+10,15

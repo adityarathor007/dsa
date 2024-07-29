@@ -10,7 +10,7 @@ int partition(vector <int> &array,int s,int e){
 
     int pivot=array[e]; 
     int i=s-1;
-    for(int j=s;j<e;j++){
+    for(int j=s;j<e;j++){   
         if(array[j]<pivot){
             i++;
             swap(array[i],array[j]);

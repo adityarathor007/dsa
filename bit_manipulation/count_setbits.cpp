@@ -13,7 +13,7 @@ int countSetBits(int n){
     
     // shorter method is that in each iteration you move that position and remove the set bit
     while(n>0){
-        n=n&n-1;
+        n=n&n-1;  //makes the rightmost set bit
         count+=1;
     }
     
