@@ -11,7 +11,7 @@ class Graph{
         V=v;
         l=new list<int>[V];
     }
-    void addEdge(int i,int j,bool undir=true){
+void addEdge(int i,int j,bool undir=true){
         l[i].push_back(j);
         if(undir){
             l[j].push_back(i);
