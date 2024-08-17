@@ -169,6 +169,41 @@ node* insertElBeforeX(node* head,int el,int x){
     }
 
     return head;
+
+}
+
+
+ node* reverseList(node* head) {
+        if(!head){
+            return head;
+        }
+        node* current=head;
+        node* prev=nullptr;
+        node* front=nullptr;
+        while(current){
+            cout<<current->data<<endl;
+            front=current->next;
+            current->next=prev;
+            prev=current;
+            current=front;
+        }
+        return prev;
+
+   
+        
+    }
+
+node* reverseLLRec(node* head){
+    if(!head||!head->next){
+        return head;
+    }
+    node* front=head->next;
+    node* newHead=reverseLLRec(front); //solve the subproblem
+    front->next=head;
+    head->next=nullptr;
+    
+    return newHead;
+
 }
 
 int main(){
@@ -194,9 +229,17 @@ int main(){
     // printLL(h);
     
     //printing the LL
-    h=insertElBeforeX(h,10,1);
-    printLL(h);
+    // h=insertElBeforeX(h,10,1);
+    // printLL(h);
     
+
+    // h=reverseList(h);
+    // printLL(h);
+
+    // h=reverseRec(h);
+
+    h=reverseLLRec(h);
+    printLL(h);
     
     
 }

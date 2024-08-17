@@ -186,6 +186,62 @@ Node* insertAtK(Node* head,int el,int k){
 }
 
 
+Node* reverseDLL(Node* head){
+    
+    
+    // method 1 using swapping of next and 
+        if(!head){
+            return nullptr;
+        }
+        if(!head->next){
+            return head;
+        }
+        Node* curr=head;
+        Node* prev=nullptr;
+        while(curr->next){
+            // cout<<curr->d<<endl;
+            prev=curr->back;
+            curr->back=curr->next;
+            curr->next=prev;
+            
+            curr=curr->back;
+            
+        }
+        
+        prev=curr->back;
+        curr->back=curr->next;
+        curr->next=prev;
+        
+        return curr;
+
+
+        // method 2 using swapping of values
+        
+          // Node* i=head;
+        // Node* tail=head;
+        // int cnt=0;
+        // while(tail->next){
+        //     tail=tail->next;
+        //     cnt+=1;
+        // }
+        
+        // int c=0;
+        
+        // while(c<=cnt/2){
+        //     swap(i->data,tail->data);
+        //     i=i->next;
+        //     tail=tail->prev;
+        //     c+=1;
+        // }
+
+        // return head;
+}
+
+
+
+
+
+
 int main(){
     vector<int>arr{1,2,3,4};
     Node* head=convertToDLL(arr);
@@ -205,7 +261,10 @@ int main(){
     // printLL(head);
 
 
-    head=insertAtK(head,5,2);
+    // head=insertAtK(head,5,2);
+    // printLL(head);
+
+    head=reverseDLL(head);
     printLL(head);
 
 

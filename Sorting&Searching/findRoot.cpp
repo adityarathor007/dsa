@@ -44,12 +44,44 @@ double findRoot(int number,int d){
 }
 
 
+// finding the floor of the square root using binary search
+
+//   long long int findFloorRoot(long long int n) {
+//         // Your code goes here
+//         if(n<=0){
+//             return 0;
+//         }
+//         long long int low=1;
+//         long long int high=n;
+//         long long ans=0;
+
+//         while(low<=high){
+            
+//             long long int mid=(low+high)>>1;
+//             // cout<<mid<<endl;
+//             long long int sqMid=mid*mid;
+//             if(sqMid==n){
+//                 ans=mid;
+//                 break;
+//             }
+//             if(sqMid>n) high=mid-1;
+            
+//             else{
+//                 low=mid+1;  
+//                 ans=mid;
+//             } 
+//         }
+        
+//         return ans;
+//     }
+
 int main(){
     int number;
     cin>>number;
-    int dec_place;
-    cin>>dec_place;
-    cout<<findRoot(number,dec_place)<<endl;
+    // int dec_place;
+    // cin>>dec_place;
+    // cout<<findRoot(number,dec_place)<<endl;
+    cout<<findFloorRoot(number)<<endl;
     
     
 }
