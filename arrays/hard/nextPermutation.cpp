@@ -33,3 +33,4 @@ int findIndexJustGreater(vector<int>&v,int s,int n){
 int main(){
 
 }
+

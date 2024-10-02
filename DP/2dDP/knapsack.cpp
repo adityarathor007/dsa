@@ -20,7 +20,7 @@ int findMaxProfit(int n,int wt,vector<int>&wts,vector<int>&prices,vector<vector<
     int exc=findMaxProfit(n-1,wt,wts,prices,dp);
     return dp[n][wt]=max(inc,exc);
 }
-
+ 
 
 // bottom-up dp
 int findMaxProfit(int n,int wt,vector<int>&wts,vector<int>prices){
