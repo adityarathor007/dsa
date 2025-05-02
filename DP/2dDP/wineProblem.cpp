@@ -3,6 +3,7 @@
 using namespace std;
 
 
+<<<<<<< Updated upstream
 //storing in 1d arr like for a particular year is wrong as that year can be produced by 2 pairs of s and e like for example this case of 0,0 or 1,1 where the year is same but the scenario is different
 // int findMaxProfit(vector<int>& prices,int n,int s,int e,vector<vector<int>> &dp){
 //     int year=n-(e-s);
@@ -52,11 +53,29 @@ int findMaxProfit(vector<int>&prices){
 
 
     return dp[0][n-1];
+=======
+int maxProfit(vector<int> &arr,vector<vector<int>> &dp,int s,int e,int n){
+
+    int year=n-(e-s);
+    if(s==e){
+        return year*arr[s];
+    }
+    if(dp[s][e]!=-1){
+        return dp[s][e];
+    }
+    int op1=year*arr[s]+maxProfit(arr,dp,s+1,e,n);
+    int op2=year*arr[e]+maxProfit(arr,dp,s,e-1,n);
+
+    
+    return dp[s][e]=max(op1,op2);
+    
+>>>>>>> Stashed changes
 
 
 }
 
 
+<<<<<<< Updated upstream
 
 int main(){
     vector<int> prices={2,3,5,1,4};
@@ -66,3 +85,13 @@ int main(){
     // cout<<findMaxProfit(prices,n,0,n-1,dp)<<endl;
     cout<<findMaxProfit(prices)<<endl;
 } 
+=======
+int main(){
+    vector<int> arr{2,4,6,2,5};
+    int n=arr.size();
+    vector<vector<int>> dp(n,vector<int>(n,-1));  //this will contain the optimal profit for i=start and j=end;
+    
+    cout<<maxProfit(arr,dp,0,n-1,n)<<endl;
+
+}
+>>>>>>> Stashed changes
