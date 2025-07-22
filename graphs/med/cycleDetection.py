@@ -11,7 +11,7 @@ def detect_cycle_dfs(V,edges):
                 return True
             stack.append(neighbor)
             visited[neighbor-1]=1
-    
+
     return False
 
 
@@ -26,7 +26,7 @@ def detect_cycle_bfs(V,edges):
 
     while queue:
         node=queue.popleft()
-        
+
         for neighbor in edges[node]:
             if visited[neighbor-1]==1:
                 return True
@@ -40,11 +40,11 @@ if __name__=="__main__":
     V=6
     edges={
         1:[2,3],
-        2:[6],
-        3:[4],
-        4:[5],
-        5:[6],
-        6:[],
+        2:[1,6],
+        3:[1,4],
+        4:[3,5],
+        5:[4,6],
+        6:[2,5],
     }
 
     if(detect_cycle_bfs(V,edges)):
