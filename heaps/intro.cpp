@@ -132,7 +132,7 @@ int main() {
     }
     cout<<endl;
 
-    heapSort(arr,n);
+    heapSort(arr,n);  //converting maxHeap to minHeap   
 
     cout<<"printing the array now"<<endl;
     for(int i=1;i<=n;i++){
