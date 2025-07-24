@@ -1,112 +1,86 @@
-#include<iostream>
-using namespace std;
-
-
-class node{
-public:
-	int data;
-	node* next;
-
-	node(int data){
-		this->data = data;
-		next = NULL;
-	}
-};
-
-void insertAtTail(node * &head,int data){
-    if(head==NULL){
-        head=new node(data);
-        return ;
+ListNode* findMiddle(ListNode* &head){
+    ListNode* slow=head;
+    ListNode* fast=head->next;
+    while(fast!=nullptr and fast->next!=nullptr){
+        slow=slow->next;
+        fast=fast->next->next;
     }
-    node* tail=head;
-    while(tail->next!=NULL){
-        tail=tail->next;
-    }
-    node * n= new node(data);
-    tail->next=n;
-    return;
-    
+
+    return slow;
 }
 
-void printLL(node * head){
-    
-    while(head!=NULL){
-        cout<<head->data<<"->";
-        head=head->next;
-    }
-    cout<<"NULL"<<endl;
-    return;
-}
+ListNode* mergeSortedList(ListNode* &left,ListNode* &right){
+    ListNode* head=nullptr;
+    ListNode* tail=nullptr;
 
-node* midPoint(node* head){
-    node* f=head;
-    node* s=head;
-    while(f->next!=NULL and f->next->next!=NULL){
-        f=f->next->next;
-        s=s->next;
-        
-    }
-    return s;
-}
-
-node* merge(node * a,node *b){
-    if(a==NULL){
-        return b;
-    }
-    else if(b==NULL){
-        return a;
-    }
-    
-    node* c;
-    if(a->data < b->data){
-        c=a;
-        c->next=merge(a->next,b);
+    if(left->val<right->val){
+        head=left;
+        left=left->next;
     }
     else{
-        c=b;
-        c->next=merge(a,b->next);
+        head=right;
+        right=right->next;
+
     }
-    return c;
-    
-    
+
+    tail=head;
+
+    while(left!=nullptr and right!=nullptr){
+        if(left->val<right->val){
+            tail->next=left;
+            left=left->next;
+        }
+        else{
+            tail->next=right;
+            right=right->next;
+        }
+        tail=tail->next;
+
+    }
+
+    if(right!=nullptr){
+        tail->next=right;
+        tail=tail->next;
+        while(tail!=nullptr){
+            tail=tail->next;
+        }
+    }
+
+    if(left!=nullptr){
+        tail->next=left;
+        tail=left->next;
+        while(tail!=nullptr){
+            tail=tail->next;
+        }
+    }
+
+    return head;
+
 }
 
 
 
+ListNode* sortList(ListNode* head) {
 
-
-
-//ToDo: mergeSort
-node* mergeSort(node* head){
-    //base case
-    if(head==NULL or head->next==NULL ){
+    if(head==nullptr || head->next==nullptr) {
         return head;
     }
-    
-    //rec case
-    node* mid=midPoint(head);
-    
-    node*a = head;
-    node*b = mid->next;
-    mid->next=NULL;
-    
-    //recursiveSorting
-    a=mergeSort(a);
-    b=mergeSort(b);
-    
-    return merge(a,b);
+
+    ListNode* middlePtr=findMiddle(head);
+
+
+    ListNode* leftHead=head;
+    ListNode* rightHead=middlePtr->next;
+    middlePtr->next=nullptr;
+
+
+    leftHead=sortList(leftHead);
+    rightHead=sortList(rightHead);
+
+
+    head=mergeSortedList(leftHead,rightHead);
+
+    return head;
+
 }
 
-
-
-int main(){
-    node* head=NULL;
-    insertAtTail(head,5);
-    insertAtTail(head,2);
-    insertAtTail(head,7);
-    insertAtTail(head,10);
-    insertAtTail(head,3);
-    printLL(head);
-    node* head_sort=mergeSort(head);
-    printLL(head_sort);
-}
