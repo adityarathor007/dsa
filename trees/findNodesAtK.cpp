@@ -1,108 +1,83 @@
-#include <iostream>
-using namespace std;
-
-
-
-class node{
-
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
 public:
-	int data;
-	node*left;
-	node*right;
-	
-	node(int d){
-		data = d;
-		left = NULL;
-		right = NULL;
-	}
+    void markParents(TreeNode*&root,unordered_map<TreeNode*,TreeNode*>&trackParents){
+        //level order traversal
+        queue<TreeNode*>q;
+        q.push(root);
+
+        while(!q.empty()){
+            int size=q.size();
+            for(int i=0;i<size;i++){
+                TreeNode* current=q.front();
+                q.pop();
+                if(current->left){
+                    q.push(current->left);
+                    trackParents[current->left]=current;
+                }
+                if(current->right){
+                    q.push(current->right);
+                    trackParents[current->right]=current;
+                }
+            }
+        }
+
+
+    }
+
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+
+        // mark parents
+        unordered_map<TreeNode*,TreeNode*>trackParents;
+        markParents(root,trackParents);
+
+        //traverse like a graph(bfs) in tree
+        int current_dist=0;
+        queue<TreeNode*>q;
+        unordered_set<int>visited;
+
+        q.push(target);
+        visited.insert(target->val);
+
+        while(!q.empty()){
+            int size=q.size();
+            if(current_dist++==k) break;
+            for(int i=0;i<size;i++){
+                TreeNode* current=q.front();
+                q.pop();
+
+                if(current->left and !visited.count(current->left->val)){
+                    visited.insert(current->left->val);
+                    q.push(current->left);
+                }
+
+                if(current->right and !visited.count(current->right->val)){
+                    visited.insert(current->right->val);
+                    q.push(current->right);
+                }
+
+                if(trackParents[current] and !visited.count(trackParents[current]->val)){
+                    visited.insert(trackParents[current]->val);
+                    q.push(trackParents[current]);
+                }
+            }
+        }
+
+        vector<int>ans;
+        while(!q.empty()){
+            ans.push_back(q.front()->val);
+            q.pop();
+        }
+
+        return ans;
+
+    }
 };
-
-void downTraverseK(node* root,int k,vector<int>& ans){
-    if(root==NULL){
-        return;
-    }
-    if(k==0){
-        // cout<<root->data<<endl;
-        ans.push_back(root->data);
-    }
-    downTraverseK(root->left, k-1,ans);
-    downTraverseK(root->right, k-1,ans);
-
-}
-
-
-
-
-int findNodesAtK(node* root,node* target,int k,vector<int> &ans){
-    if(root==NULL){
-        return -1;
-    }
-    
-    
-    //react the target node
-    if(root==target){
-        downTraverseK(root,k,ans);
-        return 0;
-
-    }
-    
-    
-    //other cases
-    int DL=findNodesAtK(root->left,target,k,ans);
-    if(DL!=-1){
-        if(DL+1==k){
-            // cout<<root->data<<endl;
-            ans.push_back(root->data);
-        }
-        else{
-            downTraverseK(root->right, k-DL-2,ans);
-        }
-        return DL+1;
-    }
-    
-    int DR=findNodesAtK(root->right,target,k,ans);
-    if(DR!=-1){
-        if(DR+1==k){
-            // cout<<root->data<<endl;
-            ans.push_back(root->data);
-        }
-        else{
-            downTraverseK(root->left, k-DR-2,ans);
-        }
-        return DR+1;
-    }
-    
-    return -1;
-}
-
-
-vector<int> nodesAtDistanceK(node *root, node *target, int k){
-    //return a SORTED vector of the nodes
-    vector<int>ans;
-    findNodesAtK(root,target,k,ans);
-    return ans;
-    
-    
-}
-
-
-
-
-int main(){
-    node* root=new node(1);
-    root->left=new node(2);
-    root->left->left=new node(4);
-    root->left->right=new node(5);
-    root->left->right->left=new node(7);
-    root->right=new node(3);
-    root->right->right=new node(6);
-    int k;
-    cout<<"enter the value of k: "<<endl;
-    cin>>k;
-    auto ans=nodesAtDistanceK(root, root->left->right, k);
-    
-
-    
-
-    
-}
