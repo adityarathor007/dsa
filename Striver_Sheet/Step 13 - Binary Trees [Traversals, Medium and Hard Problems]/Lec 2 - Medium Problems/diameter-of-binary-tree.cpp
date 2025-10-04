@@ -13,19 +13,20 @@
 class Solution {
 public:
 
-    int findHeight(TreeNode* root, int& diameter){
-        if(root==NULL) return 0;
+    int recHelper(TreeNode* node,int &ans){
+        if(!node) return 0;
 
-        int lh = findHeight(root->left, diameter);
-        int rh = findHeight(root->right, diameter);
+        int lh=recHelper(node->left,ans);
+        int rh=recHelper(node->right,ans);
 
-        diameter = max(diameter, lh+rh);
-
-        return 1 + max(lh, rh);
+        ans=max(ans,lh+rh);
+        return 1+max(lh,rh); //edge from current node to child 
     }
+
     int diameterOfBinaryTree(TreeNode* root) {
-        int diameter = 0;
-        findHeight(root, diameter);
-        return diameter;
+        if(!root) return 0;
+        int ans=0;
+        recHelper(root,ans);
+        return ans;
     }
 };
