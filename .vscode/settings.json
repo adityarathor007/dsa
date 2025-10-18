@@ -22,7 +22,23 @@
         "list": "cpp",
         "set": "cpp"
     },
-    "sqltools.connections": [],
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "xprotocol",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 33060,
+            "driver": "MySQL",
+            "name": "test1",
+            "database": "streamlit_tut",
+            "username": "root",
+            "connectionTimeout": 30,
+            "askForPassword": true
+        }
+    ],
 
 
 }   
