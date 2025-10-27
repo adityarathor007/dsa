@@ -2,69 +2,62 @@
 #include <unordered_map>
 using namespace std;
 
-class Node{
-    public:
-    char ch;
-    unordered_map<char, Node* >m;
-    bool isTerminal;
-    
-    Node(char d){
-        ch=d;
-        isTerminal=false;
-    }
-    
+struct TrieNode{
+    vector<TrieNode*> children = vector<TrieNode*>(26, nullptr);
+    bool isTerminal=false;
 };
 
+
 class Trie{
-    
+     TrieNode* root;
     public:
-        Node* root;
-        Trie(){
-            root=new Node('\0');
-    }
-    
-    void insert(string word){
-        Node* temp=root;
-        for(char ch:word){
-            if(temp->m.count(ch)==0){
-                Node* n=new Node(ch);  //creating new node as doesnt exists
-                temp->m[ch]=n;
-            }
-            temp=temp->m[ch];
+        Trie() {
+            root=new TrieNode();
         }
-        temp->isTerminal=true; //before exiting the insert function as reached the end of the word
-    };
-    
-    
-    bool search(string word){
-        Node * temp=root;
-        for(char ch:word){
-            if(temp->m.count(ch)==0){
-                return false;
+
+        void insert(string word) {
+            TrieNode* curr=root;
+            for(char ch:word){
+                if(!curr->children[ch-'a']){
+                    curr->children[ch-'a']=new TrieNode();
+                }
+                curr=curr->children[ch-'a'];
             }
-            temp=temp->m[ch];
-            
+            curr->isTerminal=true;
         }
-        return temp->isTerminal;
-    };
-    
-    
-    
-    
+
+        bool search(string word) {
+            TrieNode* curr=root;
+            for(char ch:word){
+                if(!curr->children[ch-'a']) return false;
+                curr=curr->children[ch-'a'];
+            }
+            return curr->isTerminal;
+        }
+
+        bool startsWith(string prefix) {
+            TrieNode* curr=root;
+            for(char ch:prefix){
+                if(!curr->children[ch-'a']) return false;
+                curr=curr->children[ch-'a'];
+            }
+            return true;
+        }
+
 };
 
 
 int main(){
     string words[]={"apple","ape","no","news","not","never"};
     Trie t;
-    
+
     for(auto w:words){
         t.insert(w);
     }
-    
+
     int q;
     cin>>q;
-    
+
     string search_word;
     while(q--){
         cin>>search_word;
@@ -75,6 +68,6 @@ int main(){
             cout<<"No"<<endl;
         }
     }
-    
-    
+
+
 }
