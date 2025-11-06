@@ -1,0 +1,34 @@
+OOPs: ia a programming style where things revolve around object that enhances the readability
+Object: 
+    - is an entity that has 2 things:
+        - State/Properties
+        - Behaviour
+    - is an instance of class
+    - size of the object is the space occupied by the properties
+        - For object of empty class the space occupied will be 1 byte just for identification/keep track of it
+    - Object can be created via static or dynamic allocation
+
+
+Class: user defined datatype (template)
+
+Access Modifier: from where can you access a property and behaviour what is it scope
+    - Public: 
+    - Private: (By default) these can be accessed within class
+    - Protected: 
+
+
+To access the private properties outside the class we make use of getter/setter
+
+padding and greedy alignment
+
+Constructor: 
+    - invoked during object creation and has no return type 
+    - by default it is created and invoked when the object is created  
+    - this default constructor gets removed if we create our own  (i.e if we just create a constructors without parameters)
+    - there can 2 different constructor that takes different parameters
+    - When we create a class it generates copy constructor be default which allows us to copy an objects properties values 
+    - We can create our own copy constructor but make sure while writing the function we pass '&' else it will a self infinite loop as a copy constructor gets called if we create a copy and when we pass by value it creates a copy so we are passing an argumment to an function which gets invoked when the object is created
+    - Default copy constructor does shallow copy    `   
+
+
+'this' stores the address of the current object

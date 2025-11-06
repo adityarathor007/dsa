@@ -98,31 +98,34 @@
     ]
   },
 
-  "Function Definition": {
-    "prefix": "func",
-    "body": ["${1:void} ${2:functionName}(${3:parameters}) {", " ", "}"],
-    "description": "A C++ function definition"
+   "ListNode": {
+    "prefix": "init_llnode",
+    "description": "Linked List Nodes init",
+    "body": [
+      "struct ListNode{ ",
+      "  int val;",
+      "  ListNode *next;",
+      "  ListNode():val(0),next(nullptr) {}",
+      "  ListNode(int x): val(x),next(nullptr) {}",
+      "  ListNode(int x, ListNode *next): val(x),next(next) {}",
+      "}"
+    ]
   },
 
-  "For Loop": {
-    "prefix": "for",
+  "CreateLL": {
+    "prefix": "create_ll",
+    "description": "create LL from array",
     "body": [
-      "for (int ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++ ) {",
-      "    ${3:// code}",
+      "ListNode* createLL(vector<int>arr){",
+      "  ListNode* head=new ListNode(arr[0]);",
+      "  ListNode *t1=head;",
+      "  for(int i=1;i<arr.size();i++){",
+      "      t1->next=new ListNode(arr[i]);",
+      "      t1=t1->next;",
+      "  }",
+      "return head;",
       "}"
-    ],
-    "description": "A C++ for loop"
-  },
-
-  "For 2DLoop": {
-    "prefix": "f2d",
-    "body": [
-      "for (int ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++ ) {",
-      "    for(int ${3:j} = 0; ${3:j} < ${4:m}; ${3:j}++) {",
-      "       ${5:// code}",
-      "     }",
-      "}"
-    ],
-    "description": "A C++ for loop"
+    ]
   }
+
 }
