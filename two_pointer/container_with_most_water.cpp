@@ -2,7 +2,7 @@
 using namespace std;
 
 
-
+// water=(distance between lines)×min(their heights)
 int maxArea(vector<int>& height) {
         int n=height.size();
         int i=0,j=n-1;

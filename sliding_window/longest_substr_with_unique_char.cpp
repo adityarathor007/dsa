@@ -1,6 +1,7 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
+        // sliding_window+hashing
         int i=0,j=0;
         int n=s.size();
         unordered_map<int,int>mp;
