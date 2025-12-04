@@ -19,39 +19,42 @@ public:
     unordered_map<Node*,Node*>node_to_cnode;
 
     Node* copyRandomList(Node* head) {
-        Node* temp=head;
-        Node* prev_dc=NULL;
-        Node* dup_head=NULL;
+        //M1: using hashmap to keep track of orig_node and copy_node
+        // Node* temp=head;
+        // Node* prev_dc=NULL;
+        // Node* dup_head=NULL;
 
-        if(!head) return head;
+        // if(!head) return head;
 
-        while(temp){
-            Node* dc_node=new Node(temp->val);
-            if(prev_dc) prev_dc->next=dc_node;
-            else dup_head=dc_node;
-            prev_dc=dc_node;
+        // while(temp){
+        //     Node* dc_node=new Node(temp->val);
+        //     if(prev_dc) prev_dc->next=dc_node;
+        //     else dup_head=dc_node;
+        //     prev_dc=dc_node;
 
-            node_to_cnode[temp]=dc_node;
-            temp=temp->next;
-        }
-
-
-        temp=head;
-        Node* copy_temp=dup_head;
-
-        while(temp){
-            if(temp->random){
-                Node* crandom_node=node_to_cnode[temp->random];
-                copy_temp->random=crandom_node;
-            }
-
-            temp=temp->next;
-            copy_temp=copy_temp->next;
-        }
+        //     node_to_cnode[temp]=dc_node;
+        //     temp=temp->next;
+        // }
 
 
-        return dup_head;
+        // temp=head;
+        // Node* copy_temp=dup_head;
 
+        // while(temp){
+        //     if(temp->random){
+        //         Node* crandom_node=node_to_cnode[temp->random];
+        //         copy_temp->random=crandom_node;
+        //     }
+
+        //     temp=temp->next;
+        //     copy_temp=copy_temp->next;
+        // }
+
+
+        // return dup_head;
+
+
+        // M2: placing the nodes in between
         // placing the node in between
         Node* temp=head;
         while(temp){
