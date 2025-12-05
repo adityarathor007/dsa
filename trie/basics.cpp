@@ -3,7 +3,7 @@
 using namespace std;
 
 struct TrieNode{
-    vector<TrieNode*> children = vector<TrieNode*>(26, nullptr);
+    vector<TrieNode*>children{26,nullptr}
     bool isTerminal=false;
 };
 
