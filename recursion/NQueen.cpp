@@ -1,3 +1,7 @@
+//  print the board for all possible combination
+
+
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -6,15 +10,15 @@ using namespace std;
 
 
 bool canPlace(int board[][20],int n,int x,int y){
-    
+
 
     //coloumn check
     for(int i=0;i<x;i++){
         if(board[i][y]==1){
             return false;
         }
-    }   
-    
+    }
+
 
     //for left diag
     int i=x-1;
@@ -26,7 +30,7 @@ bool canPlace(int board[][20],int n,int x,int y){
         }
         i--;j--;
     }
-    
+
 
 
 
@@ -62,16 +66,16 @@ void printBoard(int board[][20],int n){
 
 bool solveNQueen(int board[][20],int n,int i){
 
-    //base case 
+    //base case
     if(i==n){
         printBoard(board,n);
         return true;
     }
 
 
-    //rec case 
+    //rec case
     for(int j=0;j<n;j++){
-        if(canPlace(board,n,i,j)) 
+        if(canPlace(board,n,i,j))
         {
             board[i][j]=1;
 
@@ -84,7 +88,7 @@ bool solveNQueen(int board[][20],int n,int i){
             //backtrack if false in child
             board[i][j] = 0;
         }
-        
+
     }
     return false;  //if the queen cant be pladced
 
