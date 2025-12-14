@@ -17,4 +17,4 @@ double find_slope(vector<int>p1,vector<int>p2){
             ans=max(cmax_cnt+1,ans);
         }
         return ans;
-    }
+    }  
