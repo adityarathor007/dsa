@@ -1,44 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-double findMedianSortedArrays(vector<int>&arr1,vector<int>&arr2){
-    int n=arr1.size();
-    int m=arr2.size();
-
-    if (n > m) return findMedianSortedArrays(arr2, arr1); //ensure that arr1 is smallers so that mid2 does not feel short of element required vs the number of elements it has
-
-
-    //number of elements from arr1 into the left partition
-    int l=0;
-    int r=n;
-
-    // left partition will be containing ceil((n+m)/2)
-    //  such that if n+m is odd then median will be the max(l1,l2) in the left partition
-    //  else median will be max(l1,l2)+min(r1,r2) such that the left and right partition will be containing equal number of elements
-
-    while(l<=r){
-        int mid1=l+(r-l)/2; //number of elements present in the left partition
-        int mid2=(n+m+1)/2-mid1; //remaining elements from the arr2 for the left partition
-
-        // cout<<mid1<<" "<<mid2<<endl;
-
-        int l1=mid1>0?arr1[mid1-1]:INT_MIN;
-        int l2=mid2>0?arr2[mid2-1]:INT_MIN;
-        int r1=mid1<n?arr1[mid1]:INT_MAX;
-        int r2=mid2<m?arr2[mid2]:INT_MAX;
-
-        if(l1>r2) r=mid1-1; //decrease the number of elements taken from arr1 for making the final left arr
-        else if(r1<l2) l=mid1+1; //increase the number of elements taken from arr1 for making the final left arr as then from arr2 there will be less elements on the final left side
-        else{
-            if((n+m)&1) return (double)max(l1,l2);
-            else{
-                // cout<<mid1<<" "<<mid2<<endl;
-                return ((double) (max(l1,l2)+min(r1,r2)))/2;
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int m=nums1.size(),n=nums2.size();
+        if(m>n) return findMedianSortedArrays(nums2,nums1);
+        int i=0,j=m;
+        int elem_in_left=(m+n+1)/2;
+        while(i<=j){
+            // cout<<i<<" "<<j<<endl;
+            int mid=i+(j-i)/2;
+            int l1=mid!=0?nums1[mid-1]:INT_MIN;
+            int l2=mid!=m?nums1[mid]:INT_MAX;
+            int from_nums2=elem_in_left-mid;
+            int r1=from_nums2!=0?nums2[from_nums2-1]:INT_MIN;
+            int r2=from_nums2!=n?nums2[from_nums2]:INT_MAX;
+            // cout<<l1<<" "<<l2<<" "<<r1<<" "<<r2<<endl;
+            if(l1<=r2 and r1<=l2){
+                if((n+m)&1) return max(l1,r1);
+                else{
+                    return ((double)(max(l1,r1)+min(l2,r2)))/2;
+                }
             }
+            else if(l1>r2){
+                j=mid-1;
+            }
+            else i=mid+1;
         }
+        return -1;
+
     }
-    return 0;
-}
 
 int main() {
    ifstream infile("input.txt");
