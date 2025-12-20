@@ -1,4 +1,18 @@
     vector<int> twoSum(vector<int>& nums, int target) {
+        // hashing
+
+        // unordered_map<int,int>pairIdx;
+        // int n=nums.size();
+
+        // for(int i=0;i<n;i++){
+        //     int num=nums[i];
+        //     if(pairIdx.find(target-num)!=pairIdx.end()){
+        //         return {i,pairIdx[target-num]};
+        //     }
+        //     pairIdx[num]=i;
+        // }
+
+        // sorting and using 2 pointers
         vector<pair<int,int>>num_w_i;
         int n=nums.size();
 
