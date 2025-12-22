@@ -1,5 +1,5 @@
 //  print the board for all possible combination
-
+    
 
 
 #include <iostream>
