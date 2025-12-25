@@ -10,7 +10,8 @@ int singleNumber(vector<int>& nums) {
                 sum+=num>>i&1;
             }
             sum%=3;
-            ans|=sum<<i;
+            // ans|=sum<<i;
+            ans+=(sum<<i);
         }
         return ans;
     }
