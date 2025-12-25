@@ -1,14 +1,13 @@
 struct TrieNode{
     vector<TrieNode*>children{26,nullptr};
-    bool isEnd=false;
+    bool isEnd;
 };
 
-
 class WordDictionary {
-    TrieNode* root;
+    TrieNode* root=new TrieNode();
 public:
     WordDictionary() {
-        root=new TrieNode();
+
     }
 
     void addWord(string word) {
@@ -22,31 +21,34 @@ public:
         temp->isEnd=true;
     }
 
-    bool recSearch(int i, TrieNode* temp, string word){
+    bool recSearch(int i,TrieNode* node,string word){
         if(i==word.size()){
-            return temp->isEnd;
+            return node->isEnd;
+        }
+        char ch=word[i];
+        if(ch!='.'){
+            if(!node->children[ch-'a']) return false;
+            return recSearch(i+1,node->children[ch-'a'],word);
         }
 
-        // cout<<word[i]<<endl;
-
-        if(word[i]!='.'){
-            if(!temp->children[word[i]-'a']) return false;
-            return recSearch(i+1,temp->children[word[i]-'a'], word);
-        }
-
-        for(int ch='a';ch<='z';ch++){
-            if(temp->children[ch-'a']){
-                if(recSearch(i+1,temp->children[ch-'a'],word)){
-                    return true;
-                }
+        for(int j=0;j<26;j++){
+            if(node->children[j]){
+                if(recSearch(i+1,node->children[j],word)) return true;
             }
-
         }
+
         return false;
     }
 
     bool search(string word) {
         TrieNode* temp=root;
-        return recSearch(0,temp,word);
+        return recSearch(0,root,word);
     }
 };
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */

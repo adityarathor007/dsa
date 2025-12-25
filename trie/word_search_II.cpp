@@ -1,62 +1,74 @@
-class Solution{
-    vector<vector<int>>dirn{{-1,0},{0,1},{1,0},{0,-1}};
-    bool isValid(int x,int y, int m, int n){
-        if(x<0 or x>=m or y<0 or y>=n) return false;
-        return true;
-    }
+struct TrieNode{
+    vector<TrieNode*> children{26,nullptr};
+    bool isEnd;
+};
 
-    void dfs(int i,int j,string cs,TrieNode* node,vector<vector<int>>&visited,vector<vector<char>>&board,unordered_set<string>&ansSet){
-        if(!node->children[board[i][j]-'a']) return;
+class Trie{
+    public:
+        TrieNode* root=new TrieNode();
+        void insert(string word){
+            TrieNode* temp=root;
+            for(char ch:word){
+                if(!temp->children[ch-'a']){
+                    temp->children[ch-'a']=new TrieNode();
+                }
+                temp=temp->children[ch-'a'];
+            }
+            temp->isEnd=true;
+        }
+};
+
+class Solution {
+    vector<vector<int>>dirn{{-1,0},{0,1},{1,0},{0,-1}};
+    bool isValid(int x,int y,int m,int n){
+        if(x>=0 and x<m and y>=0 and y<n) return true;
+        return false;
+    }
+    void dfs(int i,int j,TrieNode*&node,string curr,unordered_set<string>&ansSet,vector<vector<char>>&board){
+        char curr_char=board[i][j];
+        if(board[i][j]=='#' or !node->children[curr_char-'a']) return;
+
         int m=board.size();
         int n=board[0].size();
 
-        TrieNode* prevNode=node;
-        node=node->children[board[i][j]-'a'];
-        visited[i][j]=1;
-        cs=cs+board[i][j];
+        TrieNode* prev_node=node;
+        node=node->children[curr_char-'a'];
+        board[i][j]='#';
+        curr+=curr_char;
 
-        if(node->isEnd) ansSet.insert(cs);
+        if(node->isEnd) ansSet.insert(curr);
 
         for(int k=0;k<4;k++){
             int nx=i+dirn[k][0];
             int ny=j+dirn[k][1];
-            if(isValid(nx,ny,m,n) and !visited[nx][ny]){
-                dfs(nx,ny,cs,node,visited,board,ansSet);
+
+            if(isValid(nx,ny,m,n)){
+                dfs(nx,ny,node,curr,ansSet,board);
             }
         }
 
-        visited[i][j]=0;
-        cs.pop_back();
-        node=prevNode;
-        return;
+        board[i][j]=curr_char;
+        node=prev_node;
+        curr.pop_back();
+        return ;
 
     }
-
-    public:
-    vector<string>findWords(vector<vector<char>>&board,vector<string>&words){
+public:
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
         Trie trie=Trie();
         for(string word:words){
             trie.insert(word);
         }
+        TrieNode* root=trie.root;
+
         int m=board.size();
         int n=board[0].size();
-        TrieNode* root=trie.root;
         unordered_set<string>ansSet;
-        vector<vector<int>>visited(m,vector<int>(n,0));
-
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
-                dfs(i,j,"",root,visited,board,ansSet);
+                dfs(i,j,root,"",ansSet,board);
             }
-
         }
-        // if(m>2 and n>1){
-        //     vector<vector<int>>visited(m,vector<int>(n,0));
-        //     string start="";
-        //     dfs(2,1,start+board[2][1],visited,board,trie,ansSet);
-        // }
-
-
         vector<string>ans(ansSet.begin(),ansSet.end());
         return ans;
     }
