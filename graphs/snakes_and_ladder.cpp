@@ -1,57 +1,52 @@
-pair<int,int>ind_to_coor(int ind,int n){
-        int q=ind/n;
-        int r=ind%n;
-        if(r==0){
-            q-=1;
-            r=n;
-        }
-
-        if(q%2!=1){
-            return {n-q-1,r-1};
-        }
-
-        return {n-q-1,n-r};
-
-    }
-
-
-    struct ComparePairs{
-        bool operator()(const pair<int,int>&p1,pair<int,int>&p2){
-            return p1.first>p2.first;
-        }
-    };
-
-
-    int snakesAndLadders(vector<vector<int>>& board) {
-        int n=board.size();
-        // priority_queue<pair<int,int>,vector<pair<int,int>>,ComparePairs>pq;
-        queue<int>q;
-        q.push(1);
-        vector<int>dist(n*n+1,-1);
-        dist[1]=0;
-
-        while(!q.empty()){
-            auto c_index=q.front();
-            q.pop();
-            if(c_index==n*n) return dist[c_index];
-            for(int jump=1;jump<=6;jump++){
-                int n_index=c_index+jump;
-                if(n_index>n*n) break;
-                // if(visited[n_index-1]) continue;
-
-                auto p=ind_to_coor(n_index,n);
-                int x=p.first,y=p.second;
-
-                //no checking the n_index visited directly are as 35 will be having a ladder to 49 and there might be also a ladder to 35 which might have caused it be visited
-                int dest = (board[x][y] == -1) ? n_index : board[x][y];
-                if(dist[dest]!=-1) continue;
-
-                dist[dest]=dist[c_index]+1;
-                q.push(dest);
-
+    class Solution {
+    public:
+        pair<int,int>getMatrixCord(int sq,int n){
+            int row=n-(sq/n)-1;
+            if(!(sq%n)) row+=1;
+            int colm=0;
+            if((n-row)&1){
+                colm=(sq%n)-1;
+                if(colm<0) colm+=n;
+            }
+            else{
+                colm=n-(sq%n);
+                if(colm==n) colm=0;
             }
 
+            return {row,colm};
+
         }
 
-        return -1;
-    }
+        int snakesAndLadders(vector<vector<int>>& board) {
+            int n=board.size();
+            vector<int>visited(n*n+1,false);
+            queue<pair<int,int>>q;
+            q.push({1,0});
+            visited[1]=true;
+
+            while(!q.empty()){
+                auto [cp,ct]=q.front();
+                q.pop();
+                if(cp==n*n) return ct;
+
+                for(int jump=1;jump<=6;jump++){
+                    int nxt=cp+jump;
+                    if(nxt>n*n) break;
+                    auto [x,y]=getMatrixCord(nxt,n);
+                    if(board[x][y]!=-1){
+                        if(!visited[board[x][y]]){
+                            visited[board[x][y]]=true;
+                            q.push({board[x][y],ct+1}); }
+                        }
+                    else {
+                        if(!visited[nxt]){
+                            visited[nxt]=true;
+                            q.push({nxt,ct+1});
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+    };
