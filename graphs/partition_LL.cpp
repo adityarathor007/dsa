@@ -8,33 +8,42 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
+class Solution {
+public:
     ListNode* partition(ListNode* head, int x) {
-        ListNode* curr=head;
-        ListNode* prev=NULL;
-        ListNode* greaterEqualHead,*lessTail;
+        ListNode* lastSmallest=nullptr,*firstGreatest=nullptr;
+        ListNode* temp=head,*prev=nullptr;
 
-        while(curr){
-            if(curr->val>=x and !greaterEqualHead){
-                greaterEqualHead=curr;
-                lessTail=prev;
-            }
-            if(curr->val<x and greaterEqualHead){
-                ListNode* nxtNode=curr->next;
-                prev->next=nxtNode;
-                curr->next=greaterEqualHead;
-                if(lessTail){
-                    lessTail->next=curr;
+        while(temp){
+            // cout<<temp->val<<endl;
+            if(temp->val<x){
+                if(!firstGreatest){
+                    lastSmallest=temp;
+                    prev=temp;
+                    temp=temp->next;
                 }
                 else{
-                    head=curr; //no lessTail means this node will become the head
+                    ListNode* nxtNode=temp->next;
+                    if(!lastSmallest) head=temp;
+                    else lastSmallest->next=temp;
+
+                    lastSmallest=temp;
+                    temp->next=firstGreatest;
+                    prev->next=nxtNode;
+                    temp=nxtNode;
                 }
-                lessTail=curr;
-                curr=nxtNode;
-                continue; //prev will remain the same as node after was removed
+
             }
-            prev=curr;
-            curr=curr->next;
+
+            else{
+                if(!firstGreatest){
+                    firstGreatest=temp;
+                }
+                prev=temp;
+                temp=temp->next;
+            }
         }
+
         return head;
     }
+};
