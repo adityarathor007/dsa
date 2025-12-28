@@ -1,27 +1,23 @@
  void flatten(TreeNode* root) {
         if(!root or (!root->left and !root->right)) return;
+        // cout<<root->val<<endl;
+        flatten(root->left);
+        flatten(root->right);
+        TreeNode* rightNode=root->right;
+        // cout<<"right_node value: "<<rightNode->val<<endl;
 
-        TreeNode* temp=root;
-        TreeNode* right_fhead=NULL;
-
-        if(root->left){
-            flatten(root->left);
-            right_fhead=root->right;
+        // if left node exists
+        if(root->left) {
             root->right=root->left;
-            root->left=NULL;
-            temp=root->right;
-            while(temp->right) temp=temp->right; //taking to the last node of the flattened left subtree
-
+            TreeNode* temp=root;
+            while(temp->right){
+                temp=temp->right;
+            }
+            temp->right=rightNode;
+            root->left=nullptr;
         }
 
-        if(right_fhead){
-            flatten(right_fhead);
-            temp->right=right_fhead;
-        }
-        else{
-            flatten(root->right);  //if no left child
-        }
-
-
+        return;
 
     }
+};

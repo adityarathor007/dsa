@@ -1,61 +1,40 @@
 class Solution {
 public:
-     double find_weight(const string& start,
-                       const string& end,
-                       const unordered_map<string, vector<pair<string, double>>>& adj) {
-        if (start == end) return 1.0;
+    double findPrd(string src,string target,unordered_map<string,vector<pair<string,double>>>&adjList){
+        queue<pair<double,string>>q;
+        unordered_set<string>visited;
+        q.push({1,src});
 
-        queue<pair<string, double>> q;
-        unordered_set<string> visited;
-
-        q.push({start, 1.0});
-        visited.insert(start);
-
-        while (!q.empty()) {
-            auto [node, curVal] = q.front();
+        while(!q.empty()){
+            auto [cwt,cn]=q.front();
+            visited.insert(cn);
             q.pop();
-
-            if (node == end) return curVal;
-
-            auto it = adj.find(node);
-            if (it == adj.end()) continue;
-
-            for (const auto& [nbr, wt] : it->second) {
-                if (!visited.count(nbr)) {
-                    visited.insert(nbr);
-                    q.push({nbr, curVal * wt});
-                }
+            if(cn==target) return cwt;
+            for(auto [neighbour,wt]:adjList[cn]){
+                if( !visited.count(neighbour)) q.push({cwt*wt,neighbour});
             }
         }
-
-        return -1.0; // no path
+        return -1;
     }
 
     vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
-        unordered_map<string,vector<pair<string,double>>>adj_list;
-        int edges=equations.size();
+        unordered_map<string,vector<pair<string,double>>> adjList;
 
-        for(int i=0;i<edges;i++){
-            string n1=equations[i][0];
-            string n2=equations[i][1];
+
+        for(int i=0;i<equations.size();i++){
+            string n1=equations[i][0],n2=equations[i][1];
             double wt=values[i];
-            adj_list[n1].push_back({n2,wt});
-            double rev_wt=1/wt;
-            adj_list[n2].push_back({n1,rev_wt});
+            adjList[n1].push_back({n2,1/wt});
+            adjList[n2].push_back({n1,wt});
         }
 
         vector<double>ans;
         for(auto query:queries){
-            string n1=query[0];
-            string n2=query[1];
-            if(adj_list.find(n1)==adj_list.end() or adj_list.find(n2)==adj_list.end()){
-                ans.push_back(-1.0);
-                continue;
-            }
-            ans.push_back(find_weight(n1,n2,adj_list));
+            string n1=query[0],n2=query[1];
+            if(adjList.find(n1)==adjList.end() or adjList.find(n2)==adjList.end()) ans.push_back(-1);
+            else if(n1==n2) ans.push_back(1);
+            else ans.push_back(findPrd(n2,n1,adjList));
         }
 
         return ans;
-
     }
-};
