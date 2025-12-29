@@ -1,43 +1,37 @@
-int countMutation(string startGene ,string&endGene,unordered_set<string>&bankSet){
-        queue<string>q;
-        q.push(startGene);
-        if(bankSet.count(startGene)) bankSet.erase(startGene);
-        int cnt=0;
+class Solution {
+    unordered_set<string>bankSet;
+    vector<char>possibleChar{'A','C','G','T'};
+public:
+    int minMutation(string startGene, string endGene, vector<string>& bank) {
+        bankSet.clear();
+        for(string gene:bank) bankSet.insert(gene);
 
+        queue<string>q;
+        int level=0;
+        q.push(startGene);
         while(!q.empty()){
             int size=q.size();
+
             for(int i=0;i<size;i++){
-                string cw=q.front();
-                if(cw==endGene) return cnt;
+                string curr=q.front();
                 q.pop();
+                if(curr==endGene) return level;
                 for(int i=0;i<8;i++){
-                    char org_char=cw[i];
-                    string new_word=cw;
-                    for(int k=0;k<4;k++){
-                        if(org_char!=possibleChars[k]){
-                            new_word[i]=possibleChars[k];
-                            if(bankSet.count(new_word)){
-                                bankSet.erase(new_word);
-                                q.push(new_word);
-                            }
-                            new_word[i]=org_char;
+                    char oc=curr[i];
+                    for(char ch:possibleChar){
+                        if(ch==oc) continue;
+                        curr[i]=ch;
+                        if(bankSet.count(curr)){
+                            bankSet.erase(curr);
+                            q.push(curr);
                         }
                     }
+                    curr[i]=oc;
                 }
             }
-            cnt+=1;
+            level+=1;
         }
+
         return -1;
     }
-
-    int minMutation(string startGene, string endGene, vector<string>& bank) {
-        unordered_set<string>bankSet;
-
-        for(string word:bank){
-            bankSet.insert(word);
-        }
-
-        if(!bankSet.count(endGene)) return -1;
-
-        return countMutation(startGene,endGene,bankSet);
-    }
+};

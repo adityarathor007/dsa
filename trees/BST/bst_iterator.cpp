@@ -1,28 +1,28 @@
-   TreeNode* nextNode=NULL, *rootNode=NULL;
-
+class BSTIterator {
+    TreeNode* nxtNode,*root;
+public:
     BSTIterator(TreeNode* root) {
-        rootNode=root;
-        nextNode=root;
-        while(nextNode->left){
-            nextNode=nextNode->left;
-        }
+        this->root=root;
+        nxtNode=root;
+        while(nxtNode->left) nxtNode=nxtNode->left;
     }
 
     int next() {
-        TreeNode* key=nextNode,*temp=rootNode;
-        nextNode=NULL;
+        TreeNode* key=nxtNode;
+        TreeNode* temp=root;
         while(temp){
             if(temp->val>key->val){
-                nextNode=temp;
+                nxtNode=temp;
                 temp=temp->left;
             }
             else temp=temp->right;
         }
+        if(nxtNode==key) nxtNode=nullptr;
 
         return key->val;
     }
 
     bool hasNext() {
-        return nextNode!=NULL;
+        return nxtNode!=nullptr;
     }
 };
