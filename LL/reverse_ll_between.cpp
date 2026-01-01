@@ -32,47 +32,40 @@ void PrintLL(ListNode* head){
 
 
 
-ListNode* reverseHelper(ListNode* &head,int left,int right, ListNode* &endNode){
-    ListNode* prev=endNode;
-    ListNode* curr=head;
-    int i=left;
-    while(i!=right+1){
-        ListNode* nxtNode=curr->next;
-        curr->next=prev;
-        prev=curr;
-        curr=nxtNode;
-        i+=1;
-    }
-
-    return prev; //return the starting Node of the reversed part
-}
-
 ListNode* reverseBetween(ListNode* head, int left, int right) {
-    if(left==right) return head;
-    int i=1;
-    ListNode *startNode=NULL,*endNode=NULL;
-    ListNode* temp=head;
-    while(temp){
-        if(i==left-1) startNode=temp;
-        if(i==right+1) endNode=temp;
+        int i=1;
+        ListNode* temp=head;
+        ListNode* prev=nullptr;
+        while(i!=left){
+            prev=temp;
+            temp=temp->next;
+            i+=1;
+        }
+
+        ListNode* prevLeft=prev;
+        ListNode* leftNode=temp;
+
+        prev=temp;
         temp=temp->next;
         i+=1;
-    }
 
-    i=1;
-    temp=head;
-    while(i!=left){
-        temp=temp->next;
-        i+=1;
-    }
+        while(i<=right){
+            ListNode* nxtNode=temp->next;
+            temp->next=prev;
+            prev=temp;
+            temp=nxtNode;
+            i+=1;
+        }
 
-    ListNode* revhead=reverseHelper(temp,left,right,endNode);
-    if(startNode) startNode->next=revhead;
-    else{
-        return revhead;
+        if(prevLeft) prevLeft->next=prev;
+        else head=prev;
+
+        leftNode->next=temp;
+
+        return head;
+
+
     }
-    return head;
-}
 
 int main() {
    ifstream infile("input.txt");
