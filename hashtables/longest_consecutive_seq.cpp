@@ -1,5 +1,7 @@
  int longestConsecutive(vector<int>& nums) {
 
+        // TC: O(n) as it visits each num once 
+
         int n=nums.size();
         if(n==0) return 0;
         int long_cnt=1;
