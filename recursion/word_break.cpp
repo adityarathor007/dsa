@@ -30,4 +30,4 @@
         vector<int>dp(n,-1);
 
         return recHelper(0,s,wordSet,dp);
-}
+    }

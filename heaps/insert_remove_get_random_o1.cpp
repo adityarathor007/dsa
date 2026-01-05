@@ -29,6 +29,25 @@ unordered_map<int,int>hashMap;
 
     }
 
+    //alternate method for removing
+    // bool remove(int val) {
+    //     if(!hashMap.count(val)) return false;
+
+    //     int target_i=hashMap[val];
+    //     int lastIndex=vec.size()-1;
+    //     int lastNum=vec[lastIndex];
+
+    //     swap(vec[lastIndex],vec[target_i]);
+
+    //     vec.pop_back();
+    //     hashMap.erase(val);
+
+    //     //updating the hashmap
+    //     if(lastIndex!=target_i) hashMap[lastNum]=target_i;
+
+    //     return true;
+    // }
+
     int getRandom() {
         int index=rand()%nums.size();
         return nums[index];
