@@ -1,94 +1,98 @@
 struct Node{
     int key;
     int val;
-    Node* next=NULL;
-    Node* prev=NULL;
-
-    Node(int k,int value){
-        key=k;
-        val=value;
+    Node* next;
+    Node* prev;
+    Node(int key,int val){
+        this->key=key;
+        this->val=val;
+        next=nullptr;
+        prev=nullptr;
     }
 
 };
 
 class LRUCache {
-    unordered_map<int,Node*>cache;
-    int max_cap;
-    Node* head=NULL;
-    Node* tail=NULL;
-public:
-    void updateLRU(Node* node){
-        if(tail==node) return ;
+    unordered_map<int,Node*>mp;
+    Node* head=nullptr,*tail=nullptr;
+    int cap=0;
+
+    void moveToStart(Node* node){
+        if(node==head) return;
 
         Node* prevNode=node->prev;
         Node* nxtNode=node->next;
 
-        nxtNode->prev=prevNode;
-        if(node==head) head=nxtNode;
-        else prevNode->next=nxtNode;
+        prevNode->next=nxtNode;
+        if(nxtNode) nxtNode->prev=prevNode;
+        else tail=prevNode;
 
-        tail->next=node;
-        node->prev=tail;
-        node->next=NULL;
-        tail=node;
-        // cout<<tail->key<<endl;
+        head->prev=node;
+        node->next=head;
+
+        // cout<<"Before: "<<head->val<<" "<<" After: "<<node->val<<endl;
+        head=node;
+
+
+
     }
 
-    Node* addNode(int key,int value){
-        Node* node=new Node(key,value);
-
+    void addNode(Node* node){
         if(!head){
             head=node;
-            tail=head;
-        }
-        else{
-            tail->next=node;
-            node->prev=tail;
             tail=node;
         }
+        else{
+            head->prev=node;
+            node->next=head;
+        }
 
-        return tail;
+        head=node;
+        // cout<<head->val<<endl;
     }
 
-    int removeLRUNode(){
-        int lru_key=head->key;
-        Node* nxtNode=head->next;
-        // delete(head);
-        head=nxtNode;
-        return lru_key;
+    int removeNode(){
+        int key=tail->key;
+        Node* prevNode=tail->prev;
+        prevNode->next=nullptr;
+        tail=prevNode;
+        return key;
     }
 
-
+public:
     LRUCache(int capacity) {
-        max_cap=capacity;
-        tail=head;
+        cap=capacity;
     }
 
     int get(int key) {
-        if(cache.find(key)!=cache.end()){
-            updateLRU(cache[key]);
-            return cache[key]->val;
-        }
-        return -1;
+        if(!mp.count(key)) return -1;
+        Node* node=mp[key];
+        moveToStart(node);
+        return node->val;
     }
 
     void put(int key, int value) {
-        if(cache.find(key)==cache.end()){
-            Node *nodePtr=addNode(key,value);
-            cache[key]=nodePtr;
+        if(mp.count(key)){
+            Node* node=mp[key];
+            node->val=value;
+            moveToStart(node);
         }
-
         else{
-            cache[key]->val=value;
-            updateLRU(cache[key]);
+            Node* node=new Node(key,value);
+            addNode(node);
+            mp[key]=node;
+            if(mp.size()>cap){
+                int rk=removeNode();
+                mp.erase(rk);
+            }
         }
 
-
-        if(cache.size()>max_cap){
-            int lru_key=removeLRUNode();
-            // cout<<"key that is removed: "<<lru_key<<endl;
-            cache.erase(lru_key);
-        }
     }
 };
 
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
