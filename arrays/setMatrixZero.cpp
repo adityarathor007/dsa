@@ -16,7 +16,7 @@ void setMatrixZero(vector<vector<int>>&arr){
     //         }
     //     }
     // }
-    
+
     // for (int i = 0; i < n; i++ ) {
     //     for(int j = 0; j < m; j++) {
     //        if(rows[i] || cols[j]){
@@ -28,46 +28,40 @@ void setMatrixZero(vector<vector<int>>&arr){
 
 
     // using O(1) space complexity because bringing the row and column in the first row and column of the matrix
-    int n=arr.size();
-    int m=arr[0].size();
-    int col_0=1;
-    for (int i = 0; i < n; i++ ) {
-        for(int j = 0; j < m; j++) {
-            if(arr[i][j]==0){
-                if(j!=0){
-                    arr[0][j]=0;
+    int m=matrix.size();
+    int n=matrix[0].size();
+
+    bool colmZero=false;
+
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            if(!matrix[i][j]){
+                if(j==0){
+                    colmZero=true;
+                    matrix[i][0]=0;
                 }
                 else{
-                    col_0=0;
+                    matrix[i][0]=0;
+                    matrix[0][j]=0;
                 }
-                
-                arr[i][0]=0;
             }
-         }
-    }
-
-    for (int i = 1; i < n; i++ ) {
-        for(int j = 1; j < m; j++) {
-           if(arr[i][0]==0 || arr[0][j]==0){
-            arr[i][j]=0;
-           }
-         }
-
-    }
-
-    if(arr[0][0]==0){
-        for(int j=1;j<m;j++){
-            arr[0][j]=0;
         }
     }
 
-    if(col_0==0){
-        for(int i=0;i<n;i++){
-            arr[i][0]=0;
+    for(int i=m-1;i>0;i--){
+        for(int j=n-1;j>0;j--){
+            if(!matrix[i][0] or !matrix[0][j]) matrix[i][j]=0;
         }
     }
 
+    //for the first row setting them zero now 
+    for(int j=1;j<n;j++){
+        if(!matrix[0][0]) matrix[0][j]=0;
+    }
 
+    if(colmZero){
+        for(int i=0;i<m;i++) matrix[i][0]=0;
+    }
 
     return ;
 
@@ -78,7 +72,7 @@ void setMatrixZero(vector<vector<int>>&arr){
 int main(){
     vector<vector<int>>input{{1,1,2,1},{0,4,0,2},{3,0,1,5}};
     setMatrixZero(input);
-    
+
     int n=input.size();
     int m=input[0].size();
 
