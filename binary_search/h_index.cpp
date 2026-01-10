@@ -1,7 +1,6 @@
 int countCitations(int prob_h,vector<int>&citations){
         //number of papers with atleast prob_h citations
-        auto it=lower_bound(citations.begin(),citations.end(),prob_h);
-        int index=distance(citations.begin(), it);
+        int index=lower_bound(citations.begin(),citations.end(),prob_h)-citations.begin();
         int cnt=citations.size()-index;
         // cout<<prob_h<<" "<<cnt<<endl;
         return cnt;

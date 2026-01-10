@@ -43,10 +43,11 @@ public:
         int currentGas=0,start=0;
 
         // now it is guranteed that solution exist so we dont need to check in circular fashion so we start checking from starting
+        // also we are not checking for back as if it is not possible to reach b from a then it wont be passible for any station in between a and b to reach b
         for(int i=0;i<gas.size();i++){
             currentGas+=gas[i]-cost[i];
             if(currentGas<0){
-                currentGas=0; //restarting it from next index
+                currentGas=0; //restarting it from next index as not able to reach this i from any other starting index before and at this 
                 start=i+1;
             }
         }
