@@ -1,29 +1,38 @@
 long long totalCost(vector<int>& costs, int k, int candidates) {
-        priority_queue<int,vector<int>,greater<int>>pq1,pq2;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
         int n=costs.size();
-        int i=0,j=n-1;
-        long long ans=0;
-        while(k--){
-            while(pq1.size()<candidates and i<=j){
-                pq1.push(costs[i++]);
-            }
-            while(pq2.size()<candidates and i<=j){
-                pq2.push(costs[j--]);
-            }
-
-            int t1=pq1.size()>0?pq1.top():INT_MAX;
-            int t2=pq2.size()>0?pq2.top():INT_MAX;
-
-            if(t1<=t2){
-                ans+=t1;
-                pq1.pop();
-            }
-            else{
-                ans+=t2;
-                pq2.pop();
-            }
-
+        cout<<n<<endl;
+        int i=0;
+        int j=n-1;
+        for(int ind=0;ind<candidates;ind++){
+            if(i>j) break;
+            pq.push({costs[i],i});
+            i+=1;
+            if(i>j) break;
+            pq.push({costs[j],j});
+            j-=1;
         }
-        return ans;
+
+        long long total_cost=0;
+        
+        while(k>0){
+            auto [min_cost,index]=pq.top();
+            pq.pop();
+            total_cost+=min_cost;
+            if(i<=j){
+                if(index<i){
+                    pq.push({costs[i],i});
+                    i+=1;
+                }
+                else{
+                    pq.push({costs[j],j});
+                    j-=1;
+                }
+            }
+
+            k-=1;
+        }
+        return total_cost;
+    }
 
     }
