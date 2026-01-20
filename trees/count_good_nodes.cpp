@@ -1,15 +1,14 @@
-void countGoodNodes(TreeNode* node,int &cnt, int cmax){
-        if(!node) return ;
-        if(node->val>=cmax){
-            cmax=max(node->val,cmax);
-            cnt+=1;
-        }
-        countGoodNodes(node->left,cnt,cmax);
-        countGoodNodes(node->right,cnt,cmax);
-    }
+int recCnt(TreeNode* node, int max_till_now){
+        if(!node) return 0;
+        int cnt=node->val>=max_till_now?1:0;
+        int nxt_max=max(max_till_now,node->val);
 
-    int goodNodes(TreeNode* root) {
-        int cnt=0;
-        countGoodNodes(root,cnt,root->val);
+        cnt+=recCnt(node->left,nxt_max);
+        cnt+=recCnt(node->right,nxt_max);
+
         return cnt;
+
     }
+int goodNodes(TreeNode* root) {
+    return recCnt(root,INT_MIN);
+}
