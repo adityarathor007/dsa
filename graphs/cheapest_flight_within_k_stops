@@ -1,0 +1,33 @@
+int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+        unordered_map<int,vector<pair<int,int>>>adjList;
+        for(auto flight: flights){
+            adjList[flight[0]].push_back({flight[1],flight[2]});
+        }
+
+        queue<pair<int,int>>q;
+        q.push({0,src});
+        int cstops=0;
+        vector<int>dist(n,INT_MAX);
+        dist[src]=0;
+
+        while(!q.empty()){
+            if(cstops>k) break;
+            int size=q.size();
+            for(int i=0;i<size;i++){
+                auto [ccost,cnode]=q.front();
+                q.pop();
+                // if(cnode==dst) return ccost;
+                for(auto [neighbour,ncost]:adjList[cnode]){
+                    if(dist[neighbour]>ccost+ncost){
+                        dist[neighbour]=ccost+ncost;
+                        q.push({ccost+ncost,neighbour});
+                    }
+                }
+            }
+            cstops+=1;
+        }
+
+        if(dist[dst]==INT_MAX) return -1;
+        return dist[dst];
+
+    }
