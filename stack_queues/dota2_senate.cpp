@@ -1,3 +1,4 @@
+ // optimal strategy is to remove the further opponents if present as the previous opponent has already used his power so wont harm them
 string predictPartyVictory(string senate) {
         queue<int>rad,dist;
         int n=senate.size();
@@ -16,4 +17,4 @@ string predictPartyVictory(string senate) {
         }
         return rad.empty()?"Dire":"Radiant";
 
-    }   
+    }
