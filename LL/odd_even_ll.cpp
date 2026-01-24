@@ -1,17 +1,17 @@
-  ListNode* oddEvenList(ListNode* head) {
-if(!head || !head->next) return head;
-        ListNode* prevOdd=head;
-        ListNode* currEven=head->next;
-        ListNode* leftMostEven=currEven;
-
-        while(currEven and currEven->next){
-            ListNode* currOdd=currEven->next;
-            prevOdd->next=currOdd;
-            currEven->next=currOdd->next;
-            currOdd->next=leftMostEven;
-            prevOdd=currOdd;
-            currEven=currEven->next;
+ListNode* oddEvenList(ListNode* head) {
+        if(!head or !head->next) return head;
+        ListNode* temp=head;
+        ListNode* evenHead=nullptr;
+        bool isOdd=true;
+        while(!isOdd or (temp->next and temp->next->next)){
+            ListNode* nxtNode=temp->next;
+            temp->next=nxtNode->next;
+            if(!evenHead) evenHead=nxtNode;
+            temp=nxtNode;
+            isOdd=!isOdd;
         }
 
+        if(evenHead) temp->next=evenHead;
         return head;
-  }
+
+    }

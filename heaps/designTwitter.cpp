@@ -1,74 +1,47 @@
-#include <iostream>
-#include <queue>
-#include <set>
-using namespace std;
-
-
-
 class Twitter {
-    unordered_map<int, vector<pair<int, int>>> posts; 
-    unordered_map<int,set<int>>followings;
-    int time;
-
+    unordered_map<int,unordered_set<int>>connections;
+    unordered_map<int,vector<pair<int,int>>>userTweets;
+    int time=0;
 public:
-    struct Comparator{
-        bool operator()(const pair<int,int>a,const pair<int,int>b){
-            return a.second<b.second;
-        }
-    };
+    Twitter() {
 
-    Twitter(){
-        time=0;
     }
-    
+
     void postTweet(int userId, int tweetId) {
-        posts[userId].push_back(make_pair(tweetId,time));
+        userTweets[userId].push_back({tweetId,time});
         time+=1;
     }
-    
+
     vector<int> getNewsFeed(int userId) {
+        priority_queue<pair<int,int>>pq;
+        for(int fid:connections[userId]){
+            for(auto [tweetId,tweetTime]:userTweets[fid]){
+                pq.push({tweetTime,tweetId});
+            }
+        }
+
+        for(auto [tweetId,tweetTime]:userTweets[userId]){
+            pq.push({tweetTime,tweetId});
+        }
+
+        int cnt=0;
         vector<int>ans;
-        priority_queue<pair<int,int>,vector<pair<int,int>>,Comparator>pq;
-
-        for(const auto& post: posts[userId]){
-            pq.push(post);
-        }
-        for(int followee: followings[userId]){
-            for(const auto& post: posts[followee]){
-                pq.push(post);
-            }
-        }
-
-        while(!pq.empty()){
-            pair<int,int>t1=pq.top();
+        while(!pq.empty() and cnt!=10){
+            auto [_,tweetId]=pq.top();
             pq.pop();
-            ans.push_back(t1.first);
-            if(ans.size()==10){
-                break;
-            }
+            ans.push_back(tweetId);
+            cnt+=1;
         }
-
 
         return ans;
-
     }
-    
+
     void follow(int followerId, int followeeId) {
-        followings[followerId].insert(followeeId);
+        connections[followerId].insert(followeeId);
     }
-       
-    
-    void unfollow(int followerId, int followeeId) {
-        cout<<"unfollow api call came"<<endl;
-        
-        // auto it=find(followings[followerId].begin(),followings[followerId].end(),followeeId);
-        // if(it!=followings[followerId].end()){
-        //     followings[followerId].erase(it);
-        // }
 
-        if (followings.count(followerId) and followings[followerId].count(followeeId)) {
-            followings[followerId].erase(followeeId);
-        }
+    void unfollow(int followerId, int followeeId) {
+        connections[followerId].erase(followeeId);
     }
 };
 
