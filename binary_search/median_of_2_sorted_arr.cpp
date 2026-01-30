@@ -3,7 +3,7 @@ using namespace std;
 
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
         int m=nums1.size(),n=nums2.size();
-        if(m>n) return findMedianSortedArrays(nums2,nums1);
+        if(m>n) return findMedianSortedArrays(nums2,nums1);  //because there is a chance that if m>n then it gives an index which does not exist nums2 and thus will cause problem
         int i=0,j=m;
         int elem_in_left=(m+n+1)/2;
         while(i<=j){
