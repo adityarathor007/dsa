@@ -47,36 +47,27 @@ TreeNode* buildTreeFromLevelOrder(vector<string>& level_order){
 
 
 int widthOfBinaryTree(TreeNode* root) {
-        queue<pair<TreeNode*,long long>>q;
-        q.push({root,0});
-        int ans=0;
-        int left,right;
-
-        while(!q.empty()){
-            int mmin=q.front().second;
-            int size=q.size();
-            for(int i=0;i<size;i++){
-                auto curr_pair=q.front();
-                long long ci=curr_pair.second-mmin;
-                q.pop();
-
-                if(i==0) left=ci;
-                if(i==size-1) right=ci;
-
-                TreeNode* node=curr_pair.first;
-
-                if(node->left) q.push({node->left,2*ci+1});
-                if(node->right) q.push({node->right,2*ci+2});
-
-                ans=max(ans,right-left+1);
-
+    queue<pair<unsigned long long,TreeNode*>>q;
+    q.push({0,root});
+    int max_width=0;
+    while(!q.empty()){
+        int size=q.size();
+        unsigned long long start;
+        for(int i=0;i<size;i++){
+            auto [ind,cn]=q.front();
+            // if(cn->val!=0) cout<<ind<<endl;
+            if(i==0) start=ind;
+            if(i==size-1) {
+                max_width=max(max_width,(int)(ind-start+1));
             }
-
+            q.pop();
+            if(cn->left) q.push({2*ind,cn->left});
+            if(cn->right) q.push({2*ind+1,cn->right});
         }
-
-        return ans;
-
     }
+    return max_width;
+}
+
 
 
 int main() {
