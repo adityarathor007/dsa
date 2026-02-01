@@ -1,24 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int maxProduct(vector<int>&arr){
-    int prefixPrd=1,suffixPrd=1;
-    int i=0,n=arr.size();
-    int ans=INT_MIN;
-    while(i<n){
-        prefixPrd*=arr[i];
-        suffixPrd*=arr[n-i-1];
-        cout<<prefixPrd<<" "<<suffixPrd<<endl;
-        ans=max(ans,max(prefixPrd,suffixPrd));
-        if(prefixPrd==0) prefixPrd=1;
-        if(suffixPrd==0) suffixPrd=1;
-        i+=1;
+int maxProduct(vector<int>& nums) {
+        int n=nums.size(),ans=INT_MIN;
+        int prefixPrd=1,suffixPrd=1;  //because if there are odd number of negatives then the max_ans will be from starting to before the
+        // last neg or after the first neg to the last element (with partitions in 0 like 0 is the new starting point of the new subarray)
 
+        for(int i=0;i<n;i++){
+            prefixPrd*=nums[i];
+            suffixPrd*=nums[n-i-1];
+            ans=max(ans,max(prefixPrd,suffixPrd));
+            if(prefixPrd==0) prefixPrd=1;
+            if(suffixPrd==0) suffixPrd=1;
+        }
 
-    }
-
-    return ans;
-
+        return ans;
 }
 
 
