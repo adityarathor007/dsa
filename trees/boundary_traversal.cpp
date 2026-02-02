@@ -46,70 +46,77 @@ TreeNode* buildTreeFromLevelOrder(vector<string>& level_order){
 }
 
 
-  void leaf_traversal(TreeNode* node,vector<int>&ans){
+    void dfs(Node* node,vector<int>&ans){
         if(!node) return;
-        leaf_traversal(node->left,ans);
-        leaf_traversal(node->right,ans);
-        if(!node->right and !node->left) ans.push_back(node->val);
+
+        if(!node->left and !node->right) ans.push_back(node->data);
+
+        dfs(node->left,ans);
+        dfs(node->right,ans);
         return;
     }
 
-    void left_traversal(TreeNode *node,vector<int>&ans){
-        if(!node) return ;
-        if(!node->right and !node->left) return ;
-        ans.push_back(node->val);
-
-        if(node->left) left_traversal(node->left,ans);
-        else left_traversal(node->right,ans);
-        return ;
-    }
-
-    void right_traversal(TreeNode* node,vector<int>&ans){
-        if(!node) return ;
-        if(!node->right and !node->left) return ;
-
-        if(node->right) right_traversal(node->right,ans);
-        else right_traversal(node->left,ans);
-
-        ans.push_back(node->val);
-        return ;
-
-    }
-
-
-    vector<int> boundaryTraversal(TreeNode *root) {
+    vector<int> boundaryTraversal(Node *root) {
         // code here
         vector<int>ans;
-        if(root->left or root->right) ans.push_back(root->val); //because if root is the leaf node then it will be added via leaf_traversal
-        left_traversal(root->left,ans);
-        leaf_traversal(root,ans);
-        right_traversal(root->right,ans);
+        if(root->left or root->right) ans.push_back(root->data); //if root is not leaf node
+        Node* temp=root->left;
+
+        // left traversal
+        while(temp){
+            if(!temp->left and !temp->right) break;
+
+            ans.push_back(temp->data);
+            if(temp->left) temp=temp->left;
+            else temp=temp->right;
+        }
+
+        // leafNodes using preorder traversal
+        dfs(root,ans);
+
+        // rightTraversal
+        temp=root->right;
+        vector<int>rightSide;
+        while(temp){
+            if(!temp->left and !temp->right) break;
+
+            rightSide.push_back(temp->data);
+            if(temp->right) temp=temp->right;
+            else temp=temp->left;
+        }
+
+        reverse(rightSide.begin(),rightSide.end());
+        ans.insert(ans.end(),rightSide.begin(),rightSide.end());
+
         return ans;
+
+
+
     }
 
 
-  int main() {
-     ifstream infile("input.txt");
-     int t;
-     infile >> t;
-     while(t--){
-         // for vector input: infile >> vec[i];
-         int n;
-         infile>>n;
-         vector<string>nodes(n);
+int main() {
+    ifstream infile("input.txt");
+    int t;
+    infile >> t;
+    while(t--){
+        // for vector input: infile >> vec[i];
+        int n;
+        infile>>n;
+        vector<string>nodes(n);
 
-         for(int i=0;i<n;i++){
-            infile>>nodes[i];
-         }
+        for(int i=0;i<n;i++){
+        infile>>nodes[i];
+        }
 
 
-         TreeNode* root=buildTreeFromLevelOrder(nodes);
-         vector<int>bt=boundaryTraversal(root);
-         for(int num:bt){
-            cout<<num<<", ";
-         }
-         cout<<endl;
+        TreeNode* root=buildTreeFromLevelOrder(nodes);
+        vector<int>bt=boundaryTraversal(root);
+        for(int num:bt){
+        cout<<num<<", ";
+        }
+        cout<<endl;
 
-     }
-  return 0;
-  }
+    }
+return 0;
+}
