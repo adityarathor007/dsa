@@ -5,12 +5,12 @@ using namespace std;
 
 
 int leastInterval(vector<char>& tasks, int n) {
-        
+
         // Formula based approach
 
         // unordered_map<char,int>mp;
         // int max_freq=0;
-        
+
         // for(char task:tasks){
         //     mp[task]+=1;
         //     max_freq=max(max_freq,mp[task]);
@@ -43,8 +43,8 @@ int leastInterval(vector<char>& tasks, int n) {
 
         int time=0;
         while(!pq.empty()){
-            vector<int>remain;
-            int cycle=n+1;
+            vector<int>remain; //to store the task that are available for then next cycle
+            int cycle=n+1;  // n+1 is the CPU cycle length, if n is the cooldown period then after a task A there will be n more tasks. Hence n+1.
 
             while(cycle and !pq.empty()){
                 int max_freq=pq.top();
@@ -60,9 +60,9 @@ int leastInterval(vector<char>& tasks, int n) {
                 pq.push(count);
             }
             if(pq.empty()) break;
-            time+=cycle;
+            time+=cycle;  //this will count as idle time
         }
 
         return time;
-                
+
 }
