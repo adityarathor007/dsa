@@ -50,34 +50,32 @@ class Trie{
 void checkOcc (vector <string> q,string text){
     unordered_map<string,bool> table;
     Trie t;
-    
+
 
     for(auto str:q){  //inserting all queries in trie
         t.insert(str);
-       
+
     }
 
-  
+
     Node *curr = t.root;
     for(int i=0;i<text.length();i++){
         curr=t.root; //this resetting is imp as because for a particular starting letter we were not able to find the matching word so starting with next text[i]
         for(int j=i;j<text.length();j++){
             // if(t.search(text.substr(i,j-i+1))){ //!---this method is inefficient as once for a starting letter not found in the trie then we are still traversing all suffix with that letter---!
-            //     table[text.substr(i, j - i + 1)]=true;  
+            //     table[text.substr(i, j - i + 1)]=true;
             // }
             char ch=text[j];
             if(curr->m.count(ch)==0){
-                
                 break;
             }
-         
+
             curr = curr->m[ch];
 
             if(curr->isTerminal){
-
                 table[text.substr(i,j-i+1)]=true;
             }
-            
+
         }
     }
 
@@ -104,11 +102,11 @@ int main(){
     // else{
     //     cout<<"trie not working properly"<<endl;
     // }
-    
+
     string text="a little cute cat is roaming around";
     vector <string> q={"ttle","cute cat","roam","ze"};
     checkOcc(q,text);
-    
+
 
     return 0;
 }
