@@ -1,29 +1,22 @@
-class Solution {
-public:
-    int characterReplacement(string s, int k) {
-        unordered_map<char,int>freq;
+int characterReplacement(string s, int k) {
         int i=0,j=0;
-        int n=int(s.size());
-        int max_freq=0;
+        vector<int>cnt(26,0);
 
+        int max_freq=0;
+        int n=s.size();
+        int ans=0;
 
         while(j<n){
-            freq[s[j]]+=1;
-            max_freq=max(max_freq,freq[s[j]]);
-            if((j-i+1)-max_freq>k){
-                freq[s[i]]-=1;
+            // cout<<i<<" "<<j<<endl;
+            cnt[s[j]-'A']+=1;
+            max_freq=max(max_freq,cnt[s[j]-'A']);
+            int win_size=j-i+1;
+            if(win_size-max_freq<=k) ans=max(ans,win_size);
+            else{
+                cnt[s[i]-'A']-=1;
                 i+=1;
-
             }
-
-            if((j-i+1)-max_freq<=k){
-                int l=j-i+1;
-                max_len=max(max_len,l);
-            }
-
             j+=1;
         }
-
-        return max_len;
-    }
-};
+        return ans;
+}
