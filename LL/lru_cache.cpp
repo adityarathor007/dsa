@@ -9,56 +9,46 @@ struct Node{
         next=nullptr;
         prev=nullptr;
     }
+};
 
+class DLL{
+Node* head=nullptr,*tail=nullptr;
+public:
+    void addNode(Node* cn){
+        if(head) head->prev=cn;
+        cn->next=head;
+        head=cn;
+        if(!tail) tail=head;
+    }
+
+    void markRU(Node* cn){
+        if(cn==head) return;
+
+        Node* nxtNode=cn->next;
+        Node* prevNode=cn->prev;
+
+        if(nxtNode) nxtNode->prev=prevNode;
+        if(prevNode) prevNode->next=nxtNode;
+
+        if(cn==tail) tail=prevNode;
+        head->prev=cn;
+        cn->next=head;
+        head=cn;
+    }
+
+    int removeLRU(){
+        Node* prevNode=tail->prev;
+        prevNode->next=nullptr;
+        int rk=tail->key;
+        tail=prevNode;
+        return rk;
+    }
 };
 
 class LRUCache {
+    int cap;
     unordered_map<int,Node*>mp;
-    Node* head=nullptr,*tail=nullptr;
-    int cap=0;
-
-    void moveToStart(Node* node){
-        if(node==head) return;
-
-        Node* prevNode=node->prev;
-        Node* nxtNode=node->next;
-
-        prevNode->next=nxtNode;
-        if(nxtNode) nxtNode->prev=prevNode;
-        else tail=prevNode;
-
-        head->prev=node;
-        node->next=head;
-
-        // cout<<"Before: "<<head->val<<" "<<" After: "<<node->val<<endl;
-        head=node;
-
-
-
-    }
-
-    void addNode(Node* node){
-        if(!head){
-            head=node;
-            tail=node;
-        }
-        else{
-            head->prev=node;
-            node->next=head;
-        }
-
-        head=node;
-        // cout<<head->val<<endl;
-    }
-
-    int removeNode(){
-        int key=tail->key;
-        Node* prevNode=tail->prev;
-        prevNode->next=nullptr;
-        tail=prevNode;
-        return key;
-    }
-
+    DLL dll=DLL();
 public:
     LRUCache(int capacity) {
         cap=capacity;
@@ -66,27 +56,26 @@ public:
 
     int get(int key) {
         if(!mp.count(key)) return -1;
-        Node* node=mp[key];
-        moveToStart(node);
-        return node->val;
+        Node* cn=mp[key];
+        dll.markRU(cn);
+        return cn->val;
     }
 
     void put(int key, int value) {
-        if(mp.count(key)){
-            Node* node=mp[key];
-            node->val=value;
-            moveToStart(node);
+        if(!mp.count(key)){
+            Node* cn=new Node(key,value);
+            dll.addNode(cn);
+            mp[key]=cn;
         }
         else{
-            Node* node=new Node(key,value);
-            addNode(node);
-            mp[key]=node;
-            if(mp.size()>cap){
-                int rk=removeNode();
-                mp.erase(rk);
-            }
+            Node* cn=mp[key];
+            cn->val=value;
+            dll.markRU(cn);
         }
-
+        if(mp.size()>cap){
+            int rk=dll.removeLRU();
+            mp.erase(rk);
+        }
     }
 };
 
