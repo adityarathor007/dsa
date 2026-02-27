@@ -1,4 +1,4 @@
-// place each number in the earliest position in tails where it can serve as a new (smaller) ending.
+// place each number in the earliest position in tails where it can serve as a new (smaller) or equal ending.
 // A smaller ending value gives more “room” to extend the subsequence in the future.
 
 int lengthOfLIS(vector<int>& nums) {
