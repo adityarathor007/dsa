@@ -1,5 +1,4 @@
 // using inoder traversal
-
 // void inOrderTraversal(TreeNode* node, int&cnt, int&ans, int&k){
 //         if(!node) return ;
 //         inOrderTraversal(node->left,cnt,ans,k);
@@ -22,18 +21,17 @@
 
 
 
-//cnt number of nodes
+//cnt number of nodes (no requirement of it to be bfs it is the position in the inorder traversal   )
 
 int cntNodes(TreeNode* node){
         if(!node) return 0;
-        int cnt=1;
-        return cnt+cntNodes(node->left)+cntNodes(node->right);
+        return 1+cntNodes(node->left)+cntNodes(node->right);
     }
 
     int kthSmallest(TreeNode* root, int k) {
         // cout<<root->val<<endl;
-        int ln=cntNodes(root->left);
-        if(ln==k-1) return root->val;
-        if(ln>k-1) return kthSmallest(root->left,k);
-        return kthSmallest(root->right,k-ln-1); //now searching among the remaining nodes
+        int lc=cntNodes(root->left);
+        if(lc==k-1) return root->val;
+        if(lc>k-1) return kthSmallest(root->left,k);
+        return kthSmallest(root->right,k-lc-1); //now searching among the remaining nodes
     }

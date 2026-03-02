@@ -11,39 +11,33 @@
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
-        ListNode* lastSmallest=nullptr,*firstGreatest=nullptr;
-        ListNode* temp=head,*prev=nullptr;
-
+       ListNode* rightMostLess=nullptr;
+        ListNode* leftMostGreaterEqual=nullptr;
+        ListNode* prev=nullptr;
+        ListNode* temp=head;
         while(temp){
-            // cout<<temp->val<<endl;
-            if(temp->val<x){
-                if(!firstGreatest){
-                    lastSmallest=temp;
-                    prev=temp;
-                    temp=temp->next;
+            int val=temp->val;
+            ListNode* nxtNode=temp->next;
+            ListNode* curr=temp;
+            if(val>=x){
+                if(!leftMostGreaterEqual) leftMostGreaterEqual=temp;
+                prev=curr; //only update prev when the node is not removed
+            }
+            else{
+                if(!leftMostGreaterEqual){
+                    rightMostLess=temp;
+                    prev=curr; //same here also prev needs to be updated
                 }
                 else{
-                    ListNode* nxtNode=temp->next;
-                    if(!lastSmallest) head=temp;
-                    else lastSmallest->next=temp;
-
-                    lastSmallest=temp;
-                    temp->next=firstGreatest;
-                    prev->next=nxtNode;
-                    temp=nxtNode;
+                    if(prev) prev->next=nxtNode;
+                    if(rightMostLess) rightMostLess->next=temp;
+                    temp->next=leftMostGreaterEqual;
+                    rightMostLess=temp;
+                    if(leftMostGreaterEqual==head) head=rightMostLess;
                 }
-
             }
-
-            else{
-                if(!firstGreatest){
-                    firstGreatest=temp;
-                }
-                prev=temp;
-                temp=temp->next;
-            }
+            temp=nxtNode;
         }
-
         return head;
     }
 };
