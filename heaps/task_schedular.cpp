@@ -5,26 +5,21 @@ using namespace std;
 
 
 int leastInterval(vector<char>& tasks, int n) {
-
-        // Formula based approach
-
-        // unordered_map<char,int>mp;
+        // M1 Greedy approach
+        // unordered_map<char,int>freq;
         // int max_freq=0;
-
         // for(char task:tasks){
-        //     mp[task]+=1;
-        //     max_freq=max(max_freq,mp[task]);
+        //     freq[task]+=1;
+        //     max_freq=max(max_freq,freq[task]);
         // }
 
-        // int max_freq_task=0;
-        // for(auto& a:mp){
-        //     if(a.second==max_freq){
-        //         max_freq_task+=1;
-        //     }
+        // int max_freq_cnt=0; //tracking number of tasks which have the same freq as the max_freq
+        // for(auto [task,cnt]:freq){
+        //     if(cnt==max_freq) max_freq_cnt+=1;
         // }
+        // int ntasks=tasks.size();
 
-        // int totalJobs=int(tasks.size());
-        // return max(((max_freq-1)*(n+1)+max_freq_task),totalJobs);
+        // return max(ntasks,max_freq+(max_freq-1)*n+(max_freq_cnt-1));  //there is a chance that all the task may not be fitting in the gap of max_task idle time
 
 
         // using priority queue
