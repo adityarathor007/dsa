@@ -1,14 +1,12 @@
 class Solution {
     int MOD=1e9+7;
 public:
-    long long computePow(long long base,long long p){
-        if(p==0) return 1;
-
-        if(p&1){
-            return (base*computePow(base,p-1))%MOD;
+    long long computePow(long long base,long long exp){
+        if(exp==0) return 1;
+        if(exp&1){
+            return (base*computePow(base,exp-1))%MOD;
         }
-        long long new_base=(base*base) % MOD;
-        return computePow(new_base,p/2);
+        return computePow((base*base)%MOD,exp/2)%MOD;
     }
 
     int countGoodNumbers(long long n) {
