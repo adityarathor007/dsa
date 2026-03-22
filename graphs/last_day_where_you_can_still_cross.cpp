@@ -60,7 +60,7 @@ public:
 
             if(x==0) ds.unionByRank(0,n1);
             if(x==rows-1) ds.unionByRank(n+1,n1);
-            if(ds.findUltimateParent(0)==ds.findUltimateParent(n+1)) return i;
+            if(ds.findUltimateParent(0)==ds.findUltimateParent(n+1)) return i;  //we start with reverse as we want to find the point when the top and bottom are connected rather than finding when the connection is broken
 
         }
         return -1;
