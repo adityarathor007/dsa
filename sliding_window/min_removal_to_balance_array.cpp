@@ -9,7 +9,9 @@ int minRemoval(vector<int>& nums, int k) {
                 max_len=max(max_len,(j-i+1));
                 j+=1;
             }
+            // already reached the max end that could have been reached with i
             else i+=1; //decrease the front side so that min_element gets increased to match the condition
+
         }
         return n-max_len;
     }
