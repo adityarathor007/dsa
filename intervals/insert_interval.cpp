@@ -1,4 +1,6 @@
 vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+
+        //M1: simulation (best)
         int i=0,n=intervals.size();
         vector<vector<int>>ans;
         //unless the collision happens keep on adding the intervals to the ans
@@ -23,5 +25,6 @@ vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInter
 
         return ans;
 
+        // M2 (line sweep not optimal as further sorting will be required)
 
     }
