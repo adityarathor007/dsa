@@ -7,7 +7,7 @@ long long minEnd(int n, int x) {
                 i+=1; //not disturbing the bits of original n
             }
             if (temp & 1) {
-                ans |= ((long long)1 << i);
+                ans += ((long long)1 << i); //adding set bit when the bit at ith position is zero
             }
 
             temp >>= 1;
