@@ -1,5 +1,4 @@
 // chaining method
-
     vector<vector<pair<int,int>>> table;
     int size=1000;
 public:
