@@ -1,17 +1,22 @@
-bool recCheck(int i,int j,string& s,string& p){
-        if(j == p.size()) return i == s.size();
-
-        bool match = (i < s.size() && (s[i] == p[j] || p[j] == '.'));
-
-         if(j+1 < p.size() && p[j+1] == '*'){
-        return recCheck(i, j+2, s, p)      // 0 occurrences of a*
-            || (match && recCheck(i+1, j, s, p)); // 1+ occurrences
+ vector<vector<int>>dp;
+public:
+    bool recSolve(int i,int j,string& p,string& s){
+        if(i==p.size()){
+            return j==s.size(); //because we have no option of skipping in s
         }
 
-        if(match) return recCheck(i+1, j+1, s, p);
-        return false;
+        bool isMatch=(j<s.size() and (p[i]==s[j] || p[i]=='.'));
 
+        if(i+1<p.size() and p[i+1]=='*'){
+            bool o1=recSolve(i+2,j,p,s); //skipping the pattern
+            bool o2=isMatch and recSolve(i,j+1,p,s); //moving to the next in s (only if it matched)
+            return dp[i][j]=(o1 or o2);
+        }
+
+
+        return dp[i][j]=(isMatch and recSolve(i+1,j+1,p,s)); //normally moving both 1 forward (only when there is no next star)
     }
     bool isMatch(string s, string p) {
-        return recCheck(0,0,s,p);
+        dp.assign(25,vector<int>(25,-1));  //because we have option of skipping even if s is completed
+        return recSolve(0,0,p,s);
     }

@@ -1,35 +1,36 @@
- ListNode* reverseKGroup(ListNode* head, int k) {
-        int size=0;
-        ListNode* temp=head;
-
-        while(temp){
-            size+=1;
-            temp=temp->next;
+void reverseGroup(ListNode* start,ListNode* end){
+        ListNode* prev=nullptr;
+        ListNode* temp=start;
+        while(temp!=end){
+            ListNode* nxt=temp->next;
+            temp->next=prev;
+            prev=temp;
+            temp=nxt;
         }
+    }
 
-        int num_groups=size/k;
-        int curr=0;
-        int i=0;
-        temp=head;
-        ListNode* newHead=head,*prev=nullptr,*currTail=temp;
-        while(curr!=num_groups){
-            ListNode* prevHead=temp;
-            while(i!=k){
-                ListNode* nxtNode=temp->next;
-                temp->next=prev;
-                prev=temp;
-                temp=nxtNode;
-                i+=1;
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* ch=head;
+        ListNode* prev=nullptr;
+        while(ch){
+            ListNode* ct=ch;
+            int cnt=0;
+            while(ct and cnt!=k-1){
+                ct=ct->next;
+                cnt+=1;
             }
-            if(curr==0) newHead=prev;
-            else{
-                currTail->next=prev; //can update currTail->next after rotation of the next list
-                currTail=prevHead;
-            }
-            curr+=1;
-            i=0;
+
+            if(cnt!=k-1 or !ct) break;
+            ListNode* nxt=ct->next;
+
+            reverseGroup(ch,nxt);
+
+            if(!prev) head=ct;
+            else prev->next=ct;
+            ch->next=nxt;
+            prev=ch;
+            ch=ch->next;
+
         }
-        currTail->next=temp;
-
-        return newHead;
- }
+        return head;
+    }
