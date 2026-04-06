@@ -4,14 +4,14 @@
         int leftMax=0,rightMax=0;
         int total=0;
         while(left<=right){
-            if(height[left]<height[right]){  //means the current height is controlled by leftMax because the rightBoundary is taller as height[right]<=rightMax
-                if(height[left]>leftMax) leftMax=height[left]; //no leftBoundary
-                else total+=(leftMax-height[left]);
-                left+=1;
+            if(height[left]<height[right]){  //means the current height is controlled by leftMax (for sure so we compute for left) because the rightBoundary is taller as rightMax=max(rightMax,rh);
+                leftMax=max(leftMax,height[left]); //deciding the left boundary
+                total+=(leftMax-height[left]);
+                left+=1; //moving because for water calculation is done
             }
             else{
-                if(height[right]>rightMax) rightMax=height[right]; //no rightBoundary so updating it
-                else total+=(rightMax-height[right]);
+                rightMax=max(rightMax,height[right]);
+                total+=(rightMax-height[right]);
                 right-=1;
             }
         }
