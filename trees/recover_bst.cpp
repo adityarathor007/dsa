@@ -1,3 +1,4 @@
+// finding those nodes such that behind it ahead it and between it the nodes are sorted but those 2 are at the wrong position
  TreeNode* firstNode=nullptr,*secondNode=nullptr;
     TreeNode* prevNode=new TreeNode(INT_MIN);
 public:
