@@ -1,3 +1,6 @@
+// A graph can have at most two Minimum Height Trees (MHTs) because the root of an MHT is always the
+// center of the tree, which corresponds to the middle node(s) of the graph's longest path (diameter) and diameter can be both even or odd.
+
 vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
         if(n==1) return {0};
 
